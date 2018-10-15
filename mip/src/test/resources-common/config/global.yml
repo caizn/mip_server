@@ -1,0 +1,31 @@
+t1t.wechat:
+  token: t1t_lingtoo_dev
+  appId: wx4afdbb15eda100db
+  appSecret: b4417a218ff3b9c00fab95665545ee29
+  oauth2.url: https://open.weixin.qq.com/connect/oauth2/authorize
+  redirect.url: http://www.cujubang.com
+  template.gameSignUp: zusBVzBhbm-s7UST6VaNnd4tvIX8a9OpI8noxctxw9w
+  template.gameStart: 6E5j8qb5ywVscn3BH93SYuGoc8fvio56Q2HaObYbWmg
+  template.gameFinish: GFlVVfi1w9Ap35Jh-WkRjU6aP0Zr8mlWSaV0cDEdooY
+  template.gameCancel: oa-ceXzPBIC1-yrqmO_nn3PfZu7EiTUfMdOLNYJIsy4
+  template.exitTeam: t6Tl0jo1ESzla4QjrXfnfzQLW1QqQ4-Ts4Le_zKG_vo
+  template.joinTeam: 7_fMmuT2VMb3qgHe-cqEksp3PBBj44t3U2G_3f-RLbk
+  template.acceptMatch: 8ag2NdXwXqnmHrfzpEWYSemeR52OHq_DLurQhLF8o7g
+  template.cancelMatch: 08Rlg_AGS5EUh_S3QySDFnHP9cTjr79GIqrPRy7Yi48
+  template.joinApply: XN9heFnFSBIqpDq4PI7tssmGoTl0tVKwB4xW1NPYnxQ
+
+system:
+  contextPath.path: http://www.cujubang.com
+  image:
+    server: http://114.215.193.30:8000/cujubang
+    logo:
+      absolutePath: /alidata/imageserver/cujubang
+      relativePath: /logo
+
+baidu.api.key: GZqwXKmi7BEjbx0dRHwN8lCf
+
+alibaba.dayu:
+  url: http://gw.api.taobao.com/router/rest
+  appKey: 23296269
+  secret: 0696d05ed84b38dc3fe9fa7db0dd4999
+  smsTemplateCode: SMS_11060548

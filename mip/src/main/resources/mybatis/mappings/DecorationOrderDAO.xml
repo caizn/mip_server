@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lingtoo.wechat.dao.DecorationOrderDAO" >
+  <resultMap id="BaseResultMap" type="com.lingtoo.wechat.pojo.DecorationOrder" >
+    <id column="decoration_order_id" property="decorationOrderId" />
+    <result column="order_no" property="orderNo"/>
+    <result column="user_id" property="userId" />
+    <result column="decoration_item_id" property="decorationItemId" />
+    <result column="emergency_status" property="emergencyStatus" />
+    <result column="book_time" property="bookTime"  />
+    <result column="pic_url" property="picUrl"/>
+    <result column="remark" property="remark"/>
+    <result column="decoration_worker_id" property="decorationWorkerId" />
+    <result column="visit_price" property="visitPrice" />
+    <result column="work_price" property="workPrice" />
+    <result column="all_price" property="allPrice" />
+    <result column="evaluate_price" property="evaluatePrice" />
+    <result column="dispatch_price" property="dispatchPrice" />
+    <result column="add_price" property="addPrice" />
+    <result column="worker_price" property="workerPrice" />
+    <result column="spread_price" property="spreadPrice" />
+    <result column="remain_price" property="remainPrice" />
+    <result column="finish_price" property="finishPrice" />
+    <result column="visit_pay_order_no" property="visitPayOrderNo"/>
+    <result column="work_pay_order_no" property="workPayOrderNo"/>
+    <result column="receive_name" property="receiveName"/>
+    <result column="receive_province" property="receiveProvince"/>
+    <result column="receive_city" property="receiveCity"/>
+    <result column="receive_area" property="receiveArea"/>
+    <result column="receive_address" property="receiveAddress"/>
+    <result column="receive_mobile" property="receiveMobile"/>
+    <result column="create_time" property="createTime"  />
+    <result column="status" property="status" />
+		
+		<result column="decoration_item_show" property="decorationItemShow"/>
+		<result column="sub_title" property="subTitle"/>
+		<result column="type" property="type"/>
+		
+		<result column="worker_name" property="workerName"/>
+		<result column="worker_phone" property="workerPhone"/>
+		
+    <result column="technology_evaluate" property="technologyEvaluate" />
+    <result column="service_evaluate" property="serviceEvaluate" />
+    <result column="specification_evaluate" property="specificationEvaluate" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    decoration_order_id, order_no, user_id, decoration_item_id, emergency_status, book_time, 
+    pic_url, remark, decoration_worker_id, visit_price, work_price, all_price, evaluate_price, 
+    dispatch_price, add_price, worker_price, spread_price, remain_price,finish_price, visit_pay_order_no, 
+    work_pay_order_no, receive_name, receive_province, receive_city, receive_area, 
+    receive_address, receive_mobile, create_time, status, technology_evaluate, service_evaluate, specification_evaluate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from decoration_order
+    where decoration_order_id = #{decorationOrderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from decoration_order
+    where decoration_order_id = #{decorationOrderId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lingtoo.wechat.pojo.DecorationOrder" >
+    insert into decoration_order (decoration_order_id, order_no, user_id, 
+      decoration_item_id, emergency_status, book_time, 
+      pic_url, remark, decoration_worker_id, 
+      visit_price, work_price, all_price, 
+      evaluate_price, dispatch_price, add_price, 
+      worker_price, spread_price, remain_price, finish_price,
+      visit_pay_order_no, work_pay_order_no,
+      receive_name, receive_province, receive_city, 
+      receive_area, receive_address, receive_mobile, 
+      create_time, status, technology_evaluate, service_evaluate, specification_evaluate)
+    values (#{decorationOrderId,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{decorationItemId,jdbcType=INTEGER}, #{emergencyStatus,jdbcType=INTEGER}, #{bookTime,jdbcType=TIMESTAMP}, 
+      #{picUrl,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{decorationWorkerId,jdbcType=INTEGER}, 
+      #{visitPrice,jdbcType=INTEGER}, #{workPrice,jdbcType=INTEGER}, #{allPrice,jdbcType=INTEGER}, 
+      #{evaluatePrice,jdbcType=INTEGER}, #{dispatchPrice,jdbcType=INTEGER}, #{addPrice,jdbcType=INTEGER}, 
+      #{workerPrice,jdbcType=INTEGER}, #{spreadPrice,jdbcType=INTEGER}, #{remainPrice,jdbcType=INTEGER}, #{finishPrice},
+      #{visitPayOrderNo,jdbcType=VARCHAR}, #{workPayOrderNo,jdbcType=VARCHAR},
+      #{receiveName,jdbcType=VARCHAR}, #{receiveProvince,jdbcType=VARCHAR}, #{receiveCity,jdbcType=VARCHAR}, 
+      #{receiveArea,jdbcType=VARCHAR}, #{receiveAddress,jdbcType=VARCHAR}, #{receiveMobile,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER},#{technologyEvaluate},#{serviceEvaluate},#{specificationEvaluate})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lingtoo.wechat.pojo.DecorationOrder" >
+    update decoration_order
+    <set >
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="decorationItemId != null" >
+        decoration_item_id = #{decorationItemId,jdbcType=INTEGER},
+      </if>
+      <if test="emergencyStatus != null" >
+        emergency_status = #{emergencyStatus,jdbcType=INTEGER},
+      </if>
+      <if test="bookTime != null" >
+        book_time = #{bookTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picUrl != null" >
+        pic_url = #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="decorationWorkerId != null" >
+        decoration_worker_id = #{decorationWorkerId,jdbcType=INTEGER},
+      </if>
+      <if test="visitPrice != null" >
+        visit_price = #{visitPrice,jdbcType=INTEGER},
+      </if>
+      <if test="workPrice != null" >
+        work_price = #{workPrice,jdbcType=INTEGER},
+      </if>
+      <if test="allPrice != null" >
+        all_price = #{allPrice,jdbcType=INTEGER},
+      </if>
+      <if test="evaluatePrice != null" >
+        evaluate_price = #{evaluatePrice,jdbcType=INTEGER},
+      </if>
+      <if test="finishPrice != null" >
+        finish_price = #{finishPrice,jdbcType=INTEGER},
+      </if>
+      <if test="dispatchPrice != null" >
+        dispatch_price = #{dispatchPrice,jdbcType=INTEGER},
+      </if>
+      <if test="addPrice != null" >
+        add_price = #{addPrice,jdbcType=INTEGER},
+      </if>
+      <if test="workerPrice != null" >
+        worker_price = #{workerPrice,jdbcType=INTEGER},
+      </if>
+      <if test="spreadPrice != null" >
+        spread_price = #{spreadPrice,jdbcType=INTEGER},
+      </if>
+      <if test="remainPrice != null" >
+        remain_price = #{remainPrice,jdbcType=INTEGER},
+      </if>
+      <if test="visitPayOrderNo != null" >
+        visit_pay_order_no = #{visitPayOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="workPayOrderNo != null" >
+        work_pay_order_no = #{workPayOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveName != null" >
+        receive_name = #{receiveName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveProvince != null" >
+        receive_province = #{receiveProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveCity != null" >
+        receive_city = #{receiveCity,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveArea != null" >
+        receive_area = #{receiveArea,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveAddress != null" >
+        receive_address = #{receiveAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveMobile != null" >
+        receive_mobile = #{receiveMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="technologyEvaluate != null" >
+        technology_evaluate = #{technologyEvaluate,jdbcType=INTEGER},
+      </if>
+      <if test="service_evaluate != null" >
+        service_evaluate = #{serviceEvaluate,jdbcType=INTEGER},
+      </if>
+      <if test="specification_evaluate != null" >
+        specification_evaluate = #{specificationEvaluate,jdbcType=INTEGER},
+      </if>
+    </set>
+    where decoration_order_id = #{decorationOrderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lingtoo.wechat.pojo.DecorationOrder" >
+    update decoration_order
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      decoration_item_id = #{decorationItemId,jdbcType=INTEGER},
+      emergency_status = #{emergencyStatus,jdbcType=INTEGER},
+      book_time = #{bookTime,jdbcType=TIMESTAMP},
+      pic_url = #{picUrl,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      decoration_worker_id = #{decorationWorkerId,jdbcType=INTEGER},
+      visit_price = #{visitPrice,jdbcType=INTEGER},
+      work_price = #{workPrice,jdbcType=INTEGER},
+      all_price = #{allPrice,jdbcType=INTEGER},
+      evaluate_price = #{evaluatePrice,jdbcType=INTEGER},
+      dispatch_price = #{dispatchPrice,jdbcType=INTEGER},
+      add_price = #{addPrice,jdbcType=INTEGER},
+      worker_price = #{workerPrice,jdbcType=INTEGER},
+      spread_price = #{spreadPrice,jdbcType=INTEGER},
+      remain_price = #{remainPrice,jdbcType=INTEGER},
+      finish_price = #{finishPrice,jdbcType=INTEGER},
+      visit_pay_order_no = #{visitPayOrderNo,jdbcType=VARCHAR},
+      work_pay_order_no = #{workPayOrderNo,jdbcType=VARCHAR},
+      receive_name = #{receiveName,jdbcType=VARCHAR},
+      receive_province = #{receiveProvince,jdbcType=VARCHAR},
+      receive_city = #{receiveCity,jdbcType=VARCHAR},
+      receive_area = #{receiveArea,jdbcType=VARCHAR},
+      receive_address = #{receiveAddress,jdbcType=VARCHAR},
+      receive_mobile = #{receiveMobile,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+        technology_evaluate = #{technologyEvaluate,jdbcType=INTEGER},
+        service_evaluate = #{serviceEvaluate,jdbcType=INTEGER},
+        specification_evaluate = #{specificationEvaluate,jdbcType=INTEGER}
+    where decoration_order_id = #{decorationOrderId,jdbcType=INTEGER}
+  </update>
+  
+    <sql id="select_order_column">
+    	<if test="orderNo!=null and orderNo!=''">
+    		and do.order_no like "%"#{orderNo}"%"
+    	</if>
+    	<if test="telephone!=null and telephone!=''">
+    		and do.receive_mobile like "%"#{telephone}"%"
+    	</if>
+    	<if test="name!=null and name!=''">
+    		and do.receive_name like "%"#{name}"%"
+    	</if>
+    	<if test="emergencyStatus!=null and emergencyStatus!=-1">
+    		and do.emergency_status=#{emergencyStatus}
+    	</if>
+    	<if test="type!=null and type!=-1">
+    		and di.type=#{type}
+    	</if>
+    	<if test="status!=null and status!=-3">
+    		and do.status=#{status}
+    	</if>
+    </sql>
+    <select id="selectDOrdersCount" resultType="int">
+    	select count(1)
+    	from decoration_order do left join decoration_item di on do.decoration_item_id=di.decoration_item_id
+    	where 1=1
+      		<include refid="select_order_column"/>
+    </select>
+    <select id="selectDOrders" resultType="list" resultMap="BaseResultMap">
+    	select do.*,di.type,di.sub_title,di.title decoration_item_show,dw.name as decoration_item_show,dw.name as worker_name,dw.telephone as worker_phone
+    	from decoration_order do 
+    		left join decoration_item di on do.decoration_item_id=di.decoration_item_id
+    		left join decoration_worker dw on do.decoration_worker_id=dw.decoration_worker_id
+    	where 1=1
+      		<include refid="select_order_column"/>
+      	order by create_time desc
+      	<if test="pageStart!=null and maxResult!=null">
+      	 	limit #{pageStart} , #{maxResult}
+      	</if>
+    </select>
+    <select id="selectDOrderById" resultMap="BaseResultMap">
+    	select do.*,di.type,di.sub_title,di.title decoration_item_show,dw.name as worker_name,dw.telephone as worker_phone
+    	from decoration_order do
+    		left join decoration_item di on do.decoration_item_id=di.decoration_item_id
+    		left join decoration_worker dw on do.decoration_worker_id=dw.decoration_worker_id
+    	where decoration_order_id=#{dOrderId}
+    </select>
+    <select id="selectDOrderByOrderNo" resultMap="BaseResultMap">
+    	select * from decoration_order
+    	where visit_pay_order_no=#{orderNo} or work_pay_order_no=#{orderNo}
+    </select>
+    <select id="selectLastDOrder" resultMap="BaseResultMap">
+    	select * from decoration_order
+    	order by decoration_order_id desc
+    	limit 0,1
+    </select>
+    <select id="selectDOrdersByUser" resultMap="BaseResultMap">
+    	select do.*,di.type,di.sub_title,di.title decoration_item_show,dw.name as decoration_item_show,dw.name as worker_name,dw.telephone as worker_phone
+    	from decoration_order do
+    		left join decoration_item di on do.decoration_item_id=di.decoration_item_id
+    		left join decoration_worker dw on do.decoration_worker_id=dw.decoration_worker_id
+    	where 1=1
+    		<if test="userType==0">
+    			and do.user_id=#{userId}
+    		</if>
+    		<if test="userType==1">
+    			and do.decoration_worker_id=#{userId}
+    		</if>
+    		<if test="status!=null and status!=-3">
+    			and do.status=#{status}
+    		</if>
+      	order by do.create_time desc
+      	<if test="pageStart!=null and maxResult!=null">
+      	 	limit #{pageStart} , #{maxResult}
+      	</if>
+    </select>
+</mapper>

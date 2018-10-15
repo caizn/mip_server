@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lingtoo.wechat.dao.MerchantDAO">
+    <resultMap id="merchant" type="com.lingtoo.wechat.pojo.Merchant">
+        <id column="merchant_id" property="merchantId"/>
+        <result column="name" property="name" />
+        <result column="province_code" property="provinceCode" />
+        <result column="city_code" property="cityCode" />
+        <result column="area_code" property="areaCode" />
+        <result column="real_name" property="realName" /><!-- 
+        <result column="phone" property="phone" /> --><!-- 
+        <result column="email" property="email" /> -->
+        <result column="role_id" property="roleId" />
+        <result column="logo_path" property="logoPath" />
+        <result column="state" property="state" />
+        <result column="create_date" property="createDate" />
+        <result column="creator" property="creator" />
+        <result column="update_time" property="updateTime" />
+        <result column="address" property="address" />
+        <result column="type" property="type" />
+        
+        <result column="service_begin_date" property="serviceBeginDate" />
+        <result column="service_end_date" property="serviceEndDate" />
+        <result column="app_name" property="appName" />
+        
+        <result column="role_name" property="roleName" />
+        <result column="managers" property="managers" />
+        
+        <result column="users" property="users" />
+        <result column="teams" property="teams" />
+        <result column="games" property="games" />
+        <result column="matchs" property="matchs" />
+        <result column="contests" property="contests" />
+        <result column="app_id" property="appId" /> 
+        
+        <result column="visit_fee" property="visitFee" />
+		<result column="introduce_fee" property="introduceFee" />
+		<result column="introduce_commission" property="introduceCommission" />
+         
+    </resultMap>
+    
+    <resultMap id="merchantMenu" type="com.lingtoo.wechat.pojo.MerchantMenu">
+        <id column="menu_id" property="menuId"/>
+        <result column="menu_name" property="menuName" />
+        <result column="menu_url" property="menuUrl" />
+    </resultMap>
+     <resultMap id="merchantSms" type="com.lingtoo.wechat.pojo.MerchantSms">
+        <id column="sms_id" property="smsId"/>
+        <result column="app_id" property="appId" />
+        <result column="merchant_id" property="merchantId" />
+        <result column="sms_code" property="smsCode" />
+        <result column="sms_sign" property="smsSign" />
+        <result column="sms_content" property="smsContent" />
+        <result column="create_date" property="createDate" />
+        <result column="creator" property="creator" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+     <resultMap id="merchantApp" type="com.lingtoo.wechat.pojo.MerchantApp">
+        <id column="app_id" property="appId"/>
+        <result column="merchant_id" property="merchantId" />
+        <result column="service_begin_date" property="serviceBeginDate" />
+        <result column="service_end_date" property="serviceEndDate" />
+        <result column="original_id" property="originalId" />
+        <result column="app_name" property="appName" />
+        <result column="app_account" property="appAccount" />
+        
+        <result column="app_detail" property="appDetail" />
+        <result column="app_level" property="appLevel" />
+        <result column="app_secret" property="appSecret" />
+        <result column="qr_code_path" property="qrCodePath" />
+        <result column="create_date" property="createDate" />
+        <result column="creator" property="creator" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+    <resultMap id="merchantTemplate" type="com.lingtoo.wechat.pojo.MerchantTemplate">
+        <id column="template_id" property="templateId"/>
+        <result column="merchant_id" property="merchantId" />
+        <result column="app_id" property="appId" /> 
+        <result column="order_create" property="orderCreate" />
+        <result column="order_pay" property="orderPay" />
+        <result column="order_logistics" property="orderLogistics" />
+        <result column="order_cancel" property="orderCancel" />
+        <result column="create_date" property="createDate" />
+        <result column="creator" property="creator" />
+        <result column="update_time" property="updateTime" />
+       
+    </resultMap>
+
+    <select id="getMerchantById" resultMap="merchant" >
+        select * from merchant where merchant_id = #{merchantId} limit 0,1
+    </select>
+
+    
+     <select id="getMerchantAppById"  resultMap="merchantApp" parameterType="java.lang.String">
+        select * from merchant_app where app_id = #{appId} limit 0,1
+    </select>
+     <select id="getMerchantAppByMerchantId"  resultMap="merchantApp" parameterType="java.lang.Integer">
+        select * from merchant_app where merchant_id = #{merchantId} limit 0,1
+    </select>
+    <select id="findMerchantApp"  resultMap="merchantApp" resultType="java.util.List">
+        select * from merchant_app
+    </select>
+    
+    <select id="getMerchantSmsByAppId"  resultMap="merchantSms" parameterType="java.lang.String">
+        select * from merchant_sms where app_id = #{appId} limit 0,1
+    </select>
+
+
+   <delete id="deleteMerchant" parameterType="java.lang.Integer">
+        DELETE FROM merchant  WHERE  merchant_id=#{merchantId}
+   </delete>
+     <delete id="deleteManagerByMerchartId" parameterType="java.lang.Integer">
+        DELETE FROM manager  WHERE  merchant_id=#{merchantId}
+   </delete>
+
+
+    <insert id="addMerchant" parameterType="com.lingtoo.wechat.pojo.Merchant">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="merchantId">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        INSERT INTO merchant
+        (name,address,type,province_code,city_code,area_code,role_id,logo_path,state,create_date,creator,update_time)
+        VALUES
+        (#{name},#{address},#{type},#{provinceCode},#{cityCode},#{areaCode},#{roleId},#{logoPath},#{state},#{createDate},#{creator},#{updateTime})
+    </insert>
+    
+     <insert id="addMerchantSms" parameterType="com.lingtoo.wechat.pojo.MerchantSms">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="smsId">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        INSERT INTO merchant_sms
+        (app_id,merchant_id,sms_code,sms_sign,sms_content,create_date,creator,update_time)
+        VALUES
+        (#{appId},#{merchantId},#{smsCode},#{smsSign},#{smsContent},#{createDate},#{creator},#{updateTime})
+    </insert>
+    
+    <insert id="addMerchantApp" parameterType="com.lingtoo.wechat.pojo.MerchantApp">
+        INSERT INTO merchant_app
+        (app_id,merchant_id,service_begin_date,service_end_date,original_id,app_account,app_name,app_detail,app_level,app_secret,qr_code_path,create_date,creator,update_time)
+        VALUES
+        (#{appId},#{merchantId},#{serviceBeginDate},#{serviceEndDate},#{originalId},#{appAccount},#{appName},#{appDetail},#{appLevel},#{appSecret},#{qrCodePath},#{createDate},#{creator},#{updateTime})
+    </insert>
+    
+     <!-- 修改商家信息 -->
+     <update id="updateMerchant" parameterType="com.lingtoo.wechat.pojo.Merchant" >
+        update merchant
+        <set >
+           <if test="name != null and name != ''" >
+                name = #{name},
+            </if>
+            <if test="provinceCode != null and provinceCode != ''" >
+                province_code = #{provinceCode},
+            </if>
+            <if test="cityCode != null and cityCode != ''" >
+                city_code = #{cityCode},
+            </if>
+            <if test="areaCode != null" ><!--  and areaCode != '' -->
+                area_code = #{areaCode},
+            </if>
+            <if test="address != null and address != ''" >
+                address = #{address},
+            </if>
+            <if test="logoPath != null and logoPath != ''" >
+                logo_path = #{logoPath},
+            </if>
+            <if test="state==0 or state == 1" >
+                state = #{state},
+            </if>
+            <if test="updateTime != null and updateTime != ''" >
+                update_time = #{updateTime},
+            </if>
+             <if test="roleId != null and roleId != ''" >
+                role_id = #{roleId},
+            </if>
+             <if test="type != null and type != ''" >
+                type = #{type},
+            </if> 
+            <if test="visitFee != null and visitFee != ''" >
+            	visit_fee=#{visitFee}
+            </if>
+            <if test="introduceFee != null and introduceFee != ''" >
+            	introduce_fee=#{introduceFee}
+            </if>
+            <if test="introduceCommission != null and introduceCommission != ''" >
+            	introduce_commission=#{introduceCommission}
+            </if>  
+        </set>
+        where merchant_id = #{merchantId}
+    </update>
+    
+     <!-- 修改公众号信息 -->
+     <update id="updateMerchantApp" parameterType="com.lingtoo.wechat.pojo.MerchantApp" >
+        update merchant_app
+        <set >
+           <if test="serviceBeginDate != null and serviceBeginDate != ''" >
+                service_begin_date = #{serviceBeginDate},
+            </if>
+            <if test="serviceEndDate != null and serviceEndDate != ''" >
+                service_end_date = #{serviceEndDate},
+            </if>
+            <if test="originalId != null and originalId != ''" >
+                original_id = #{originalId},
+            </if>
+            <if test="appName != null and appName != ''" >
+                app_name = #{appName},
+            </if>
+            <if test="appAccount != null and appAccount != ''" >
+                app_account = #{appAccount},
+            </if>
+            
+            <if test="appDetail != null and appDetail != ''" >
+                app_detail = #{appDetail},
+            </if>
+             <if test="appLevel != null and appLevel != ''" >
+                app_level = #{appLevel},
+            </if>
+             <if test="appSecret != null and appSecret != ''" >
+                app_secret = #{appSecret},
+            </if>
+            <if test="qrCodePath != null and qrCodePath != ''" >
+                qr_code_path = #{qrCodePath},
+            </if>
+            <if test="updateTime != null and updateTime != ''" >
+                update_time = #{updateTime},
+            </if><!-- 
+             <if test="type != null and type != ''" >
+                type = #{type},
+            </if> -->
+        </set>
+        where app_id = #{appId}
+    </update>
+    
+     <!-- 修改推送模板信息 -->
+     <!-- <update id="updateMerchantTemplate" parameterType="com.lingtoo.wechat.pojo.MerchantTemplate" >
+        update merchant_template
+        <set >
+           <if test="gameSignUp != null and gameSignUp != ''" >
+                game_sign_up = #{gameSignUp},
+            </if>
+            <if test="gameStart != null and gameStart != ''" >
+                game_start = #{gameStart},
+            </if>
+            <if test="gameFinish != null and gameFinish != ''" >
+                game_finish = #{gameFinish},
+            </if>
+            <if test="gameCancel != null and gameCancel != ''" >
+                game_cancel = #{gameCancel},
+            </if>
+            <if test="exitTeam != null and exitTeam != ''" >
+                exit_team = #{exitTeam},
+            </if>
+             <if test="acceptMatch != null and acceptMatch != ''" >
+                accept_match = #{acceptMatch},
+            </if>
+             <if test="cancelMatch != null and cancelMatch != ''" >
+                cancel_match = #{cancelMatch},
+            </if>
+            <if test="joinApply != null and joinApply != ''" >
+                join_apply = #{joinApply},
+            </if>
+              <if test="joinContest != null and joinContest != ''" >
+                join_contest = #{joinContest},
+            </if>
+              <if test="joinTeam != null and joinTeam != ''" >
+                join_team = #{joinTeam},
+            </if>
+             
+            <if test="updateTime != null and updateTime != ''" >
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where template_id = #{templateId}
+    </update> -->
+    
+     <!-- 修改短信模板信息 -->
+     <update id="updateMerchantSms" parameterType="com.lingtoo.wechat.pojo.MerchantSms" >
+        update merchant_sms
+        <set >
+           <if test="smsCode != null and smsCode != ''" >
+                sms_code = #{smsCode},
+            </if>
+            <if test="smsSign != null and smsSign != ''" >
+                sms_sign = #{smsSign},
+            </if>
+            <if test="smsContent != null and smsContent != ''" >
+                sms_content = #{smsContent},
+            </if>
+            <if test="updateTime != null and updateTime != ''" >
+                update_time = #{updateTime},
+            </if>
+             <if test="type != null and type != ''" >
+                type = #{type},
+            </if>
+        </set>
+        where sms_id = #{smsId}
+    </update>
+    
+    
+    <select id="getMerchantsByRoleId" resultType="java.lang.Integer">
+      SELECT  count(a.merchant_id)  FROM merchant a where role_id= #{roleId}
+     
+    </select>
+    
+
+    <select id="findMerchantMenu" resultMap="merchantMenu" resultType="java.util.List">
+      SELECT * FROM merchant_menu a order by a.menu_id 
+    </select>
+    
+        <update id="updateManagerRoleId" >
+        update manager set role_id=#{roleId}  where merchant_id=#{merchantId}
+        </update>
+    
+
+   	<!-- 分页begin -->
+     <sql id="select_merchant_column">
+       <if test="merchantName != null and merchantName != ''">
+      	and a.name like "%"#{merchantName}"%"
+      </if>
+      <if test="provinceCode != null and provinceCode != ''">
+         and a.province_code = #{provinceCode}
+      </if>
+       <if test="cityCode != null and cityCode != ''">
+         and a.city_code = #{cityCode}
+      </if>
+       <if test="areaCode != null and areaCode != ''">
+         and a.area_code = #{areaCode}
+      </if>
+      <if test="state !=null and state!=-1">
+      	and a.state=#{state}
+      </if>
+      <if test="status ==1">
+      	and b.service_begin_date &lt;=DATE_FORMAt(now(),'%Y-%m-%d') and b.service_end_date &gt;=DATE_FORMAt(now(),'%Y-%m-%d')
+      </if>
+       <if test="status ==2">
+      	and (service_begin_date &gt;DATE_FORMAt(now(),'%Y-%m-%d') or service_end_date &lt;DATE_FORMAt(now(),'%Y-%m-%d'))
+      </if>
+      <if test="status ==3">
+      	and b.app_id is null 
+      </if>
+      
+    </sql>
+    <select id="findMerchantCount" resultType="java.lang.Integer">
+      SELECT  count(a.merchant_id)  FROM merchant a left join merchant_app b on a.merchant_id=b.merchant_id  where 1=1 
+      <include refid="select_merchant_column"/>
+    </select>
+    <select id="findMerchantCountBySchool" resultType="java.lang.Integer">
+      SELECT  count(a.merchant_id)  FROM merchant a left join merchant_app b on a.merchant_id=b.merchant_id  where 1=1 
+      and (a.type=0 or a.type=1 or a.type=2 or a.type=3)
+      	and a.state=0
+      <if test="merchantName != null and merchantName != ''">
+      	and a.name like "%"#{merchantName}"%"
+      </if>
+      <if test="provinceCode != null and provinceCode != ''">
+         and a.province_code = #{provinceCode}
+      </if>
+       <if test="cityCode != null and cityCode != ''">
+         and a.city_code = #{cityCode}
+      </if>
+       <if test="areaCode != null and areaCode != ''">
+         and a.area_code = #{areaCode}
+      </if>
+    </select>
+    <select id="findMerchantList" resultMap="merchant" resultType="java.util.List">
+      SELECT a.*,b.service_begin_date,b.service_end_date,b.app_name,c.name as role_name,
+      (select count(1) from manager where merchant_id = a.merchant_id and delete_flag = 0) managers
+      FROM merchant a left join merchant_app b on a.merchant_id=b.merchant_id 
+      left join role c on a.role_id=c.role_id
+      where 1=1 
+      <include refid="select_merchant_column"/>
+       order by a.create_date desc
+      <if test="pageStart!=null and maxResult!=null">
+      	 limit #{pageStart} , #{maxResult}
+      </if>
+    </select>
+    <select id="findMerchantListBySchool" resultMap="merchant" resultType="java.util.List">
+      SELECT a.*,b.service_begin_date,b.service_end_date,b.app_name,c.name as role_name,
+      (select count(1) from manager where merchant_id = a.merchant_id and delete_flag = 0) managers
+      FROM merchant a left join merchant_app b on a.merchant_id=b.merchant_id
+      left join role c on a.role_id=c.role_id
+      where 1=1
+      and (a.type=0 or a.type=1 or a.type=2 or a.type=3)
+      	and a.state=0
+      <if test="merchantName != null and merchantName != ''">
+      	and a.name like "%"#{merchantName}"%"
+      </if>
+      <if test="provinceCode != null and provinceCode != ''">
+         and a.province_code = #{provinceCode}
+      </if>
+       <if test="cityCode != null and cityCode != ''">
+         and a.city_code = #{cityCode}
+      </if>
+       <if test="areaCode != null and areaCode != ''">
+         and a.area_code = #{areaCode}
+      </if>
+        order by field(area_code,350212) desc,a.create_date desc
+      <if test="pageStart!=null and maxResult!=null">
+      	 limit #{pageStart} , #{maxResult}
+      </if>
+    </select>
+    <select id="findMerchantIdList" resultType="int">
+      SELECT a.merchant_id
+      FROM merchant a
+      where 1=1 
+      <include refid="select_merchant_column"/>
+       order by a.create_date desc
+      <if test="pageStart!=null and maxResult!=null">
+      	 limit #{pageStart} , #{maxResult}
+      </if>
+    </select>
+	<!-- 分页end -->
+	
+	
+	<select id="findMerchantTongJiCount" resultType="java.lang.Integer">
+          SELECT count(a.merchant_id)  FROM merchant a 
+    </select>
+    <select id="findMerchantTongJiList" resultMap="merchant" resultType="java.util.List">
+       SELECT a.*,b.app_id,
+      	  (select count(1) from tt_wechat_user a where a.appid = b.app_id) users,
+      		(select count(1) from tt_team_info a where a.appid = b.app_id) teams,
+		  (select count(1) from tt_game a where a.appid = b.app_id ) games,
+		  (select count(1) from tt_match a where a.appid = b.app_id ) matchs,      
+		  (select count(1) from tt_contest a where a.appid = b.app_id ) contests
+     	 FROM merchant a left join merchant_app b on a.merchant_id=b.merchant_id 
+       	order by a.create_date desc limit #{pageStart} , #{maxResult}
+    </select>
+    
+     <select id="findMerchantByRoleId" resultMap="merchant" resultType="java.util.List">
+       SELECT * from merchant where role_id=#{roleId}
+      	 
+    </select>
+
+    <sql id="select_area_code">
+        <if test="type == 1">
+            and area_code=${areaCode}
+        </if>
+        <if test="type == 2">
+            and substr(area_code, 1, 4) = substr(${areaCode}, 1, 4)
+        </if>
+        <if test="type == 3">
+            and substr(area_code, 1, 2) = substr(${areaCode}, 1, 2)
+        </if>
+    </sql>
+    <select id="findMerchantCountByAreaCode" resultType="java.lang.Integer">
+        SELECT count(1) from merchant where 1=1 and state=0 and type=0
+        <include refid="select_area_code"/>
+    </select>
+    <select id="findMerchantByAreaCode" resultMap="merchant" resultType="java.util.List">
+        SELECT * from merchant where type=0 and state=0
+        <include refid="select_area_code"/>
+        order by create_date desc limit #{pageStart} , #{maxResult}
+    </select>
+	
+	
+    <select id="getMerchantTemplateByAppId"  resultMap="merchantTemplate" parameterType="java.lang.String">
+        select * from merchant_template where app_id = #{appId} limit 0,1
+    </select>
+</mapper>

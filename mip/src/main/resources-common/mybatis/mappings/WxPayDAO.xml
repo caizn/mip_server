@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lingtoo.wechat.dao.WxPayDAO">
+    <resultMap type="com.lingtoo.wechat.pojo.WxPaySet" id="wxPaySet">
+    	<id column="wx_pay_set_id" property="wxPaySetId" />
+        <result column="merchant_id" property="merchantId" />
+        <result column="appid" property="appid" />
+        <result column="appsecret" property="appsecret" />
+        <result column="pay_url" property="payUrl" />
+        <result column="pay_test_url" property="payTestUrl" />
+        <result column="partnerid" property="partnerid" />
+        <result column="partnerpwd" property="partnerpwd" />
+        <result column="pay_version" property="payVersion" />
+        <result column="partnerkey" property="partnerkey" />
+        <result column="paysignkey" property="paysignkey" />
+        <result column="gaojing_url" property="gaojingUrl" />
+        <result column="weiquan_url" property="weiquanUrl" />
+        <result column="pay_status" property="payStatus" />
+        <result column="pay_file" property="payFile"/>
+        <result column="com" property="com" />
+    </resultMap>
+    <resultMap type="com.lingtoo.wechat.pojo.WxPayProductorder" id="wxPayProductorder">
+    	<id column="wx_pay_productorder_id" property="wxPayProductorderId" />
+        <result column="merchant_id" property="merchantId" />
+        <result column="bankType" property="bankType" />
+        <result column="body" property="body" />
+        <result column="attach" property="attach" />
+        <result column="partner" property="partner" />
+        <result column="trade_no" property="tradeNo" />
+        <result column="out_trade_no" property="outTradeNo" />
+        <result column="total_fee" property="totalFee" />
+        <result column="fee_type" property="feeType" />
+        <result column="notify_url" property="notifyUrl" />
+        <result column="spbill_create_ip" property="spbillCreateIp" />
+        <result column="time_start" property="timeStart" />
+    </resultMap>
+    <resultMap type="com.lingtoo.wechat.pojo.WxPayReceivemsgpost" id="wxPayReceivemsgpost">
+    	<id column="wx_pay_receivemsgpost_id" property="wxPayReceivemsgpostId" />
+        <result column="merchant_id" property="merchantId" />
+        <result column="wpxid" property="wpxid" />
+        <result column="sign_type" property="signType" />
+        <result column="service_version" property="serviceVersion" />
+        <result column="input_charset" property="inputCharset" />
+        <result column="sign" property="sign" />
+        <result column="sign_key_index" property="signKeyIndex" />
+        <result column="trade_mode" property="tradeMode" />
+        <result column="trade_state" property="tradeState" />
+        <result column="pay_info" property="payInfo" />
+        <result column="partner" property="partner" />
+        <result column="bank_type" property="bankType" />
+        <result column="bank_billno" property="bankBillno" />
+        <result column="total_fee" property="totalFee" />
+        <result column="fee_type" property="feeType" />
+        <result column="notify_id" property="notifyId" />
+        <result column="transaction_id" property="transactionId" />
+        <result column="out_trade_no" property="outTradeNo" />
+        <result column="attach" property="attach" />
+        <result column="time_end" property="timeEnd" />
+        <result column="transport_fee" property="transportFee" />
+        <result column="product_fee" property="productFee" />
+        <result column="discount" property="discount" />
+        <result column="buyer_alias" property="buyerAlias" />
+        <result column="return_code" property="returnCode" />
+        <result column="return_msg" property="returnMsg" />
+        <result column="appid" property="appid" />
+        <result column="mch_id" property="mchId" />
+        <result column="device_info" property="deviceInfo" />
+        <result column="result_code" property="resultCode" />
+        <result column="err_code" property="errCode" />
+        <result column="err_code_des" property="errCodeDes" />
+        <result column="openid" property="openid" />
+        <result column="is_subscribe" property="isSubscribe" />
+        <result column="trade_type" property="tradeType" />
+        <result column="coupon_fee" property="couponFee" />
+        <result column="nonce_str" property="nonceStr" />
+    </resultMap>
+    <resultMap type="com.lingtoo.wechat.pojo.WxPayReceivemsgxml" id="wxPayReceivemsgxml">
+    	<id column="wx_pay_receivemsgxml_id" property="wxPayReceivemsgxmlId" />
+        <result column="merchant_id" property="merchantId" />
+        <result column="openid" property="openid" />
+        <result column="appid" property="appid" />
+        <result column="issubscribe" property="issubscribe" />
+        <result column="timestamp" property="timestamp" />
+        <result column="noncestr" property="noncestr" />
+        <result column="appsignnature" property="appsignnature" />
+        <result column="signmethod" property="signmethod" />
+        <result column="msgtype" property="msgtype" />
+        <result column="feedbackid" property="feedbackid" />
+        <result column="transid" property="transid" />
+        <result column="reason" property="reason" />
+        <result column="solution" property="solution" />
+        <result column="extinfo" property="extinfo" />
+        <result column="picurl" property="picurl" />
+        <result column="type" property="type" />
+        <result column="errortype" property="errortype" />
+        <result column="description" property="description" />
+        <result column="alarmcontent" property="alarmcontent" />    
+    </resultMap>
+    <resultMap type="com.lingtoo.wechat.pojo.WxPayRefund" id="wxPayRefund">
+    	<id column="wx_pay_refund_id" property="wxPayRefundId" />
+        <result column="sign_type" property="signType" />
+        <result column="input_charset" property="inputCharset" />
+        <result column="sign_key_index" property="signKeyIndex" />
+        <result column="service_version" property="serviceVersion" />
+        <result column="partner" property="partner" />
+        <result column="out_trade_no" property="outTradeNo" />
+        <result column="transaction_id" property="transactionId" />
+        <result column="out_refund_no" property="outRefundNo" />
+        <result column="total_fee" property="totalFee" />
+        <result column="refund_fee" property="refundFee" />
+        <result column="op_user_id" property="opUserId" />
+        <result column="op_user_passwd" property="opUserPasswd" />
+        <result column="recv_user_id" property="recvUserId" />
+        <result column="recv_user_name" property="recvUserName" />
+        <result column="use_spbill_no_flag" property="useSpbillNoFlag" />
+        <result column="refund_type" property="refundType" />
+    </resultMap>
+    <insert id="insertProductOrder">
+    	INSERT INTO `wx_pay_productorder`
+			(`merchant_id`,					`bank_type`,				`body`,
+			`attach`,						`partner`,					`out_trade_no`,
+			`trade_no`,						`total_fee`,				`fee_type`,
+			`notify_url`,					`spbill_create_ip`,			`time_start`,
+			`time_expire`,					`transport_fee`,			`product_fee`,
+			`goods_tag`,					`status`,					`orderstr`,
+			`paytype`,						`dealtime`)
+		VALUES
+			(#{merchantId},					#{bankType},				#{body},
+			#{attach},						#{partner},					#{outTradeNo},
+			#{tradeNo},						#{totalFee},				#{feeType},
+			#{notifyUrl},					#{spbillCreateIp},			#{timeStart},
+			#{timeExpire},					#{transportFee},			#{productFee},
+			#{goodsTag},					#{status},					#{orderstr},
+			#{paytype},						#{dealtime});
+    </insert>
+    <update id="updateProductOrder">
+    	UPDATE `wx_pay_productorder`
+		SET
+			`merchant_id`		 = #{merchantId},
+			`bank_type`			 = #{bankType},
+			`body`				 = #{body},
+			`attach`			 = #{attach},
+			`partner`			 = #{partner},
+			`out_trade_no`		 = #{outTradeNo},
+			`trade_no`			 = #{tradeNo},
+			`total_fee`			 = #{totalFee},
+			`fee_type`			 = #{feeType},
+			`notify_url`		 = #{notifyUrl},
+			`spbill_create_ip`	 = #{spbillCreateIp},
+			`time_start`		 = #{timeStart},
+			`time_expire`		 = #{timeExpire},
+			`transport_fee`		 = #{transportFee},
+			`product_fee`		 = #{productFee},
+			`goods_tag`			 = #{goodsTag},
+			`status`			 = #{status},
+			`orderstr`			 = #{orderstr},
+			`paytype`			 = #{paytype},
+			`dealtime`			 = #{dealtime}
+		WHERE 
+			`wx_pay_productorder_id` = #{wxPayProductorderId};    	
+    </update>
+    <insert id="insertReceivemsgpost">
+    	INSERT INTO `wx_pay_receivemsgpost`
+			(`merchant_id`,				`wpxid`,					`sign_type`,
+			`service_version`,			`input_charset`,			`sign`,
+			`sign_key_index`,			`trade_mode`,				`trade_state`,
+			`pay_info`,					`partner`,					`bank_type`,
+			`bank_billno`,				`total_fee`,				`fee_type`,
+			`notify_id`,				`transaction_id`,			`out_trade_no`,
+			`attach`,					`time_end`,					`product_fee`,
+			`discount`,					`transport_fee`,			`buyer_alias`,
+			`return_code`,				`return_msg`,				`appid`,
+			`mch_id`,					`device_info`,				`result_code`,
+			`err_code`,					`err_code_des`,				`openid`,
+			`is_subscribe`,				`trade_type`,				`coupon_fee`,
+			`nonce_str`)
+		VALUES
+			(#{merchantId},				#{wpxid},					#{signType},
+			#{serviceVersion},			#{inputCharset},			#{sign},
+			#{signKeyIndex},			#{tradeMode},				#{tradeState},
+			#{payInfo},					#{partner},					#{bankType},
+			#{bankBillno},				#{totalFee},				#{feeType},
+			#{notifyId},				#{transactionId},			#{outTradeNo},
+			#{attach},					#{timeEnd},					#{productFee},
+			#{discount},				#{transportFee},			#{buyerAlias},
+			#{returnCode},				#{returnMsg},				#{appid},
+			#{mchId},					#{deviceInfo},				#{resultCode},
+			#{errCode},					#{errCodeDes},				#{openid},
+			#{isSubscribe},				#{tradeType},				#{couponFee},
+			#{nonceStr});
+    </insert>
+    <insert id="insertPayRefund">
+    	INSERT INTO `wx_pay_refund`
+			(`sign_type`,				`input_charset`,			
+			`sign_key_index`,			`service_version`,			`partner`,
+			`out_trade_no`,				`transaction_id`,			`out_refund_no`,
+			`total_fee`,				`refund_fee`,				`op_user_id`,
+			`op_user_passwd`,			`recv_user_id`,				`recv_user_name`,
+			`use_spbill_no_flag`,		`refund_type`,				`refund_status`)
+		VALUES
+			(#{signType},				#{inputCharset},			
+			#{signKeyIndex},			#{serviceVersion},			#{partner},
+			#{outTradeNo},				#{transactionId},			#{outRefundNo},
+			#{totalFee},				#{refundFee},				#{opUserId},
+			#{opUserPasswd},			#{recvUserId},				#{recvUserName},
+			#{useSpbillNoFlag},			#{refundType},				#{refundStatus});
+    </insert>
+    <select id="selectWxPaySet" resultMap="wxPaySet">
+    	SELECT *FROM `wx_pay_set` where merchant_id=#{merchantId}
+    </select>
+    <select id="selectProductorOrderByTradeNo" resultMap="wxPayProductorder">
+    	SELECT *FROM `wx_pay_productorder` where out_trade_no=#{tradeNo}
+    </select>
+    <select id="selectReceivemsgpostByTradeNo" resultMap="wxPayReceivemsgpost">
+    	SELECT *FROM `wx_pay_receivemsgpost` where merchant_id=#{merchantId} and out_trade_no=#{tradeNo}
+    </select>
+    <select id="selectRefundListByTradeNo" resultMap="wxPayRefund" resultType="list">
+    	select *from `wx_pay_refund` where out_trade_no=#{tradeNo}
+    </select>
+</mapper>

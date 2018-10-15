@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lingtoo.wechat.dao.WebStatisticsDAO">
+	<resultMap id="comment" type="com.lingtoo.wechat.pojo.WebStatistics">
+		<id column="id" property="id" />
+		<result column="merchant_id" property="merchantId" />
+		<result column="link" javaType="java.lang.String" property="link" />
+		<result column="create_time" javaType="java.util.Date" property="createTime"/>
+		<result column="user_id" javaType="java.lang.Integer" property="userId" />
+		<result column="ip" javaType="java.lang.String" property="ip" />
+	</resultMap>
+	<insert id="insert" parameterType="com.lingtoo.wechat.pojo.WebStatistics">
+		<selectKey resultType="java.lang.Integer" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		INSERT INTO
+		web_statistics(id,merchant_id,link,create_time,user_id,ip)
+		VALUES
+		(#{id,jdbcType=INTEGER},#{merchantId,jdbcType=INTEGER},
+			#{link},#{createTime},#{userId,jdbcType=INTEGER},#{ip})
+	</insert>
+</mapper>

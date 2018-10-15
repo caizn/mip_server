@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lingtoo.wechat.dao.ManagerDAO">
+    <resultMap id="manager" type="com.lingtoo.wechat.pojo.Manager">
+        <id column="manager_id" property="managerId"/>
+        <result column="account" property="account" />
+        <result column="real_name" property="realName" />
+        <result column="password" property="password" />
+        <result column="phone" property="phone" />
+        <result column="email" property="email" />
+        <result column="create_time" property="createTime" />
+        <result column="locked" property="locked" />
+        <result column="last_login_time" property="lastLoginTime" />
+        <result column="login_count" property="loginCount" />
+        <result column="role_id" property="roleId" />
+        <result column="role_name" property="roleName" />
+        <result column="delete_flag" property="deleteFlag" />
+        <result column="merchant_id" property="merchantId" />
+        <result column="state" property="state" />
+        <result column="subadmin_flag" property="subadminFlag" />
+        <result column="level" property="level" />
+        <result column="type" property="type" />
+        <result column="logo_path" property="logoPath" />
+    </resultMap>
+   <!-- 管理员列表 -->
+   
+   <!-- 通过账号查找管理员-->
+    <select id="getManagerByAccount" resultMap="manager" parameterType="java.lang.String">
+        select * from manager where account = #{account} and delete_flag=0 limit 0,1
+    </select>
+    <select id="getManagerByPhone" resultMap="manager" parameterType="java.lang.String">
+    	select * from manager where phone = #{phone} and delete_flag=0 limit 0,1
+    </select>
+     <select id="getManagerByEmail" resultMap="manager" parameterType="java.lang.String">
+        select * from manager where email = #{email} and delete_flag=0 limit 0,1
+    </select>
+     <select id="getManagerByMerchantId" resultMap="manager" parameterType="java.lang.Integer">
+        select * from manager where merchant_id = #{merchantId} and delete_flag=0 limit 0,1
+    </select>    
+   <select id="getManagerById"  resultMap="manager">
+        select * from manager where manager_id = #{managerId} and delete_flag=0  limit 0,1
+    </select>
+   <select id="getMerchantById"  resultMap="manager">
+        select * from manager where manager_id = #{managerId} and delete_flag=0  limit 0,1
+    </select>
+    
+    <update id="updateManagerPwd">
+        UPDATE manager  SET password=#{password} WHERE manager_id = #{managerId}
+    </update>
+    <update id="updateManagerStatus">
+        UPDATE manager SET locked=#{locked} WHERE manager_id = #{managerId}
+    </update>
+     <update id="deleteManager">
+        UPDATE manager SET delete_flag=1 WHERE manager_id = #{managerId}
+    </update>
+
+    <!-- 新增管理员 -->
+    <insert id="addManager" parameterType="com.lingtoo.wechat.pojo.Manager">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="managerId">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        INSERT INTO manager
+        (account,real_name,password,phone,email,locked,login_count,create_time,role_id,delete_flag,merchant_id,state,subadmin_flag,level,type,logo_path)
+        VALUES
+        (#{account},#{realName},#{password},#{phone},#{email},#{locked},#{loginCount},#{createTime},#{roleId},#{deleteFlag},#{merchantId},#{state},#{subadminFlag},#{level},#{type},#{logoPath})
+    </insert>
+    
+    <!-- 修改管理员 -->
+     <update id="updateManager" parameterType="com.lingtoo.wechat.pojo.Manager" >
+        update manager
+        <set >
+           <if test="password != null" >
+                password = #{password},
+            </if>
+            <if test="realName != null" >
+                real_name = #{realName},
+            </if>
+            <if test="phone != null" >
+                phone = #{phone},
+            </if>
+            <if test="email != null" >
+                email = #{email},
+            </if>
+            <if test="loginCount != null" >
+                login_count = #{loginCount},
+            </if>
+            <if test="lastLoginTime != null" >
+                last_login_time = #{lastLoginTime},
+            </if>
+            <if test="roleId != null" >
+                role_id = #{roleId},
+            </if>
+             <if test="state != null" >
+                state = #{state},
+            </if>
+             <if test="merchantId != null" >
+                merchant_id = #{merchantId},
+            </if>
+             <if test="level != null" >
+                level = #{level},
+            </if>
+             <if test="type != null" >
+                type = #{type},
+            </if>
+             <if test="logoPath != null" >
+                logo_path = #{logoPath},
+            </if>
+            
+            
+        </set>
+        where manager_id = #{managerId}
+    </update>
+    
+   	<!-- 管理员分页begin -->
+     <sql id="select_manager_column">
+       <if test="account != null and account != ''">
+      	and a.account like "%"#{account}"%"
+      </if>
+      <if test="locked != null and locked != ''">
+      	and a.locked = #{locked}
+      </if>
+      <if test="state != null and state != ''">
+      	and a.state = #{state}
+      </if>
+       <if test="merchantId != null" >
+          and a.merchant_id = #{merchantId}
+       </if>
+    </sql>
+    <select id="findManagerCount" resultType="java.lang.Integer">
+      SELECT  count(a.manager_id)  FROM manager a where  a.delete_flag=0 
+      <include refid="select_manager_column"/>
+    </select>
+    <select id="findManagerList" resultMap="manager" resultType="java.util.List">
+      SELECT a.*,b.name as role_name  FROM manager a left join role b on a.role_id=b.role_id where a.delete_flag=0  
+      <include refid="select_manager_column"/>
+       order by a.create_time desc limit #{pageStart} , #{maxResult}
+    </select>
+	<!-- 管理员分页end -->
+</mapper>

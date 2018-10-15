@@ -1,0 +1,7 @@
+module01:
+  testStringKey: testValue
+  testBooleanKey: 0
+  testIntKey: 10
+  testFloatKey: 3.45
+  testDoubleKey: 4.566
+  testLongKey: 3234242

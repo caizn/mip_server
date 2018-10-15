@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lingtoo.wechat.dao.RegionInfoDAO">
+   <resultMap id="regionInfo" type="com.lingtoo.wechat.pojo.RegionInfo">
+        <id column="region_code" property="regionCode"/>
+        <result column="region_name" property="regionName" />
+      
+    </resultMap>
+    
+
+    <select id="findRegionInfoList" resultMap="regionInfo" resultType="java.util.List">
+      SELECT *  FROM region_info
+    </select>
+</mapper>

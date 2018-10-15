@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lingtoo.wechat.dao.LogDAO" >
+    <resultMap id="log" type="com.lingtoo.wechat.pojo.Log" >
+        <id column="log_id" property="logId" jdbcType="INTEGER" />
+        <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+        <result column="operate_role" property="operateRole" jdbcType="TINYINT" />
+        <result column="operate_id" property="operateId" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="operate_type" property="operateType" jdbcType="TINYINT" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+    </resultMap>
+    <resultMap id="logM" type="com.lingtoo.wechat.pojo.Log" >
+        <id column="log_id" property="logId" jdbcType="INTEGER" />
+        <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+        <result column="operate_role" property="operateRole" jdbcType="TINYINT" />
+        <result column="operate_id" property="operateId" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="operate_type" property="operateType" jdbcType="TINYINT" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="real_name" property="managerName" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        log_id, merchant_id, operate_role, operate_id, create_time, operate_type, remark
+    </sql>
+    <insert id="insert" parameterType="com.lingtoo.wechat.pojo.Log" >
+        insert into log (operate_role,merchant_id, operate_id,
+        create_time, operate_type, remark
+        )
+        values (#{operateRole,jdbcType=TINYINT},#{merchantId}, #{operateId,jdbcType=INTEGER},
+        #{createTime,jdbcType=TIMESTAMP}, #{operateType,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!-- 日志分页begin -->
+    <sql id="select_log_column">
+        <if test="operateId != null and operateId != ''">
+            and log.operate_id = #{operateId}
+        </if>
+        <if test="beginDate != null and beginDate != ''">
+            and DATE_FORMAt(log.create_time,'%Y-%m-%d') &gt;= #{beginDate}
+        </if>
+        <if test="endDate != null and endDate != ''">
+            and DATE_FORMAt(log.create_time,'%Y-%m-%d') &lt;= #{endDate}
+        </if>
+    </sql>
+    <select id="findLogCount" resultType="java.lang.Integer">
+        SELECT  count(log.log_id)  
+        FROM log log left join manager m on log.operate_id=m.manager_id 
+        where 1=1
+        <if test="name!=null and name!=''">
+        	and m.real_name like "%"#{name}"%"
+        </if>
+        <include refid="select_log_column"/>
+    </select>
+
+    <select id="findLogList" resultMap="logM" resultType="java.util.List">
+        SELECT  log.*,m.real_name 
+        FROM log log left join manager m on log.operate_id=m.manager_id 
+        where 1=1 
+        <include refid="select_log_column"/>
+        <if test="name!=null and name!=''">
+        	and m.real_name like "%"#{name}"%"
+        </if>
+        order by log.create_time desc limit #{pageStart} , #{maxResult}
+    </select>
+    <!-- 日志分页end -->
+    <select id="findLogCountByMerchant" resultType="java.lang.Integer">
+        SELECT  count(log.log_id)  
+        FROM log log left join manager m on log.operate_id=m.manager_id 
+        where 1=1
+        <if test="name!=null and name!=''">
+        	and m.real_name like "%"#{name}"%"
+        </if>
+        <if test="merchantId != null and merchantId != ''">
+            and log.merchant_id = #{merchantId}
+        </if>
+        <if test="beginDate != null and beginDate != ''">
+            and DATE_FORMAt(log.create_time,'%Y-%m-%d') &gt;= #{beginDate}
+        </if>
+        <if test="endDate != null and endDate != ''">
+            and DATE_FORMAt(log.create_time,'%Y-%m-%d') &lt;= #{endDate}
+        </if>
+    </select>
+
+    <select id="findLogListByMerchant" resultMap="logM" resultType="java.util.List">
+        SELECT  log.*,m.real_name FROM log log left join manager m on log.operate_id=m.manager_id where 1=1 
+        <if test="merchantId != null and merchantId != ''">
+            and log.merchant_id = #{merchantId}
+        </if>
+        <if test="beginDate != null and beginDate != ''">
+            and DATE_FORMAt(log.create_time,'%Y-%m-%d') &gt;= #{beginDate}
+        </if>
+        <if test="endDate != null and endDate != ''">
+            and DATE_FORMAt(log.create_time,'%Y-%m-%d') &lt;= #{endDate}
+        </if>
+        <if test="name!=null and name!=''">
+        	and m.real_name like "%"#{name}"%"
+        </if>
+        order by log.create_time desc limit #{pageStart} , #{maxResult}
+    </select>
+    <!-- 日志分页end -->
+
+
+    <select id="selectByPrimaryKey" resultMap="log" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from log
+        where log_id = #{logId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from log
+        where log_id = #{logId,jdbcType=INTEGER}
+    </delete>
+
+</mapper>

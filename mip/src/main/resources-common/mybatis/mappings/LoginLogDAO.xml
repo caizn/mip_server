@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lingtoo.wechat.dao.LoginLogDAO">
+   <resultMap id="loginLog" type="com.lingtoo.wechat.pojo.LoginLog">
+        <id column="login_log_id" property="loginLogId"/>
+        <result column="account" property="account" />
+        <result column="real_name" property="realName" />
+        <result column="account_type" property="accountType" />
+        <result column="result" property="result" />
+        <result column="log_ip" property="logIp" />
+        <result column="log_time" property="logTime" />
+        
+        <result column="merchant_id" property="merchantId" />
+    </resultMap>
+    
+    <!-- 新增登录日志 -->
+    <insert id="addLoginLog" parameterType="com.lingtoo.wechat.pojo.LoginLog">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="loginLogId">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        INSERT INTO login_log
+        (account,real_name,account_type,result,log_ip,log_time,merchant_id)
+        VALUES
+        (#{account},#{realName},#{accountType},#{result},#{logIp},#{logTime},#{merchantId})
+    </insert>
+   	<!-- 登录日志查询分页begin -->
+     <sql id="select_loginLog_column">
+       <if test="account != null and account != ''">
+      	and a.account like "%"#{account}"%"
+      </if>
+      <if test="realName != null and realName != ''">
+      	and a.real_name like "%"#{realName}"%"
+      </if>
+      <if test="accountType != null and accountType != ''">
+      	and a.account_type = #{accountType}
+      </if>
+       <if test="merchantId != null" >
+           and   a.merchant_id = #{merchantId} 
+      </if>
+    </sql>
+    <select id="findLoginLogCount" resultType="java.lang.Integer">
+      SELECT  count(a.login_log_id) a FROM login_log a where 1=1 
+      <include refid="select_loginLog_column"/>
+    </select>
+    <select id="findLoginLogList" resultMap="loginLog" resultType="java.util.List">
+      SELECT a.*  FROM login_log a where 1=1
+      <include refid="select_loginLog_column"/>
+       order by a.log_time desc limit #{pageStart} , #{maxResult}
+    </select>
+	<!-- 登录日志查询分页end -->
+</mapper>

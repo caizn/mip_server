@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lingtoo.wechat.dao.RoleDAO">
+    <resultMap id="role" type="com.lingtoo.wechat.pojo.Role">
+        <id column="role_id" property="roleId"/>
+        <result column="merchant_id" property="merchantId"/>
+        <result column="name" property="name" />
+        <result column="remark" property="remark" />
+        <result column="create_time" property="createTime" />   
+        <result column="type" property="type"/>
+        
+    </resultMap>
+    <resultMap id="roleMenu" type="com.lingtoo.wechat.pojo.RoleMenu">
+        <id column="role_menu_id" property="roleMenuId"/>
+        <result column="role_id" property="roleId" />
+        <result column="menu_id" property="menuId" />
+    </resultMap>
+    <resultMap id="menu" type="com.lingtoo.wechat.pojo.Menu">
+        <id column="menu_id" property="menuId"/>
+        <result column="name" property="name" />
+        <result column="icon" property="icon" />
+        <result column="href" property="href" />
+        <result column="parent_menu_id" property="parentMenuId" />  
+        <result column="remark" property="remark" />  
+        <result column="order_by" property="orderBy" />  
+        <result column="data_id" property="dataId" />    
+    </resultMap>
+  <!-- 操作角色 -->
+    <insert id="addRole" parameterType="com.lingtoo.wechat.pojo.Role">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="roleId">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        INSERT INTO role (name,merchant_id,remark,create_time,type) VALUES (#{name},#{merchantId},#{remark},#{createTime},#{type})
+    </insert>
+   <select id="findRoleList" resultMap="role" resultType="java.util.List">
+      SELECT * FROM role 
+      where 1=1
+      <if test="type!=null">
+      	and type=#{type}
+      </if>
+      <if test="merchantId!=null">
+      	and (merchant_id=#{merchantId} or merchant_id=0)
+      </if>
+      <if test="merchantId==null">
+      	and merchant_id=0
+      </if>
+      order by create_time desc
+   </select>
+   <select id="getRole" resultMap="role">
+      SELECT * FROM role  where role_id=#{roleId}
+   </select>
+   <update id="updateRole" parameterType="com.lingtoo.wechat.pojo.Role">
+        UPDATE role  
+        <set >
+        <if test="name != null and name != ''" >
+            name=#{name},
+         </if>
+        <if test="merchantId != null" >
+            merchant_id=#{merchantId},
+         </if>
+          <if test="remark != null and remark != ''" >
+             remark=#{remark},
+          </if>
+           <if test="menus != null and menus != 0" >
+             menus=#{menus},
+          </if>
+           <if test="type != null and type != 0" >
+             type=#{type},
+          </if>
+         </set> 
+		   where role_id=#{roleId}
+   </update>
+   <update id="updateRoleMerchants" parameterType="com.lingtoo.wechat.pojo.Role">
+        UPDATE role set  merchants=#{merchants}  where role_id=#{roleId}
+   </update>
+   <delete id="deleteRole" parameterType="java.lang.Integer">
+        DELETE FROM role  WHERE  role_id=#{roleId}
+   </delete>
+   <select id="getManagerCountByRoleId" resultType="java.lang.Integer">
+      SELECT  count(manager_id) FROM manager  where role_id=#{roleId} and delete_flag=0
+   </select>
+   <!-- 操作菜单 -->
+   
+   <select id="findMenuList" resultMap="menu" resultType="java.util.List">
+      SELECT * FROM menu  order by parent_menu_id asc,order_by asc 
+   </select>
+   <select id="findMenuListByRoleId" resultMap="menu" resultType="java.util.List">
+      SELECT a.* FROM menu a,role_menu b where a.menu_id=b.menu_id and b.role_id=#{roleId}  order by parent_menu_id asc,order_by asc 
+   </select>
+   <select id="findRoleMenuList" resultMap="roleMenu" resultType="java.util.List">
+      SELECT a.* FROM role_menu a where a.role_id=#{roleId}
+   </select>
+   
+   <delete id="deleteRoleMenu" parameterType="java.lang.Integer">
+        DELETE FROM role_menu  WHERE  role_id=#{roleId}
+   </delete>
+   
+    <insert id="addRoleMenu" parameterType="com.lingtoo.wechat.pojo.RoleMenu">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="roleMenuId">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        INSERT INTO role_menu (role_id,menu_id) VALUES (#{roleId},#{menuId})
+    </insert>
+</mapper>

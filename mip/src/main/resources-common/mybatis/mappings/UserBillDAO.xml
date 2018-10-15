@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lingtoo.wechat.dao.UserBillDAO">
+    <resultMap id="userMoneyBill" type="com.lingtoo.wechat.pojo.UserMoneyBill">
+        <id column="user_money_id" property="userMoneyId"/>
+        <result column="user_id" property="userId"/>
+        <result column="money_float" property="moneyFloat"/>
+        <result column="money_final" property="moneyFinal"/>
+        <result column="type" property="type"/>
+        <result column="decoration_order_id" property="decorationOrderId"/>
+        <result column="user_withdraw_id" property="userWithdrawId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="state" property="state"/>
+    </resultMap>
+    <resultMap id="userIntegralBill" type="com.lingtoo.wechat.pojo.UserIntegralBill">
+        <id column="user_integral_id" property="userIntegralId"/>
+        <result column="user_id" property="userId"/>
+        <result column="integral_float" property="integralFloat"/>
+        <result column="integral_final" property="integralFinal"/>
+        <result column="type" property="type"/>
+        <result column="decoration_order_id" property="decorationOrderId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="state" property="state"/>
+    </resultMap>
+    <insert id="insertUserMoneyBill">
+    	INSERT INTO `user_money_bill`
+			(`user_id`,					`money_float`,					`money_final`,
+			`type`,						`decoration_order_id`,			`create_time`,
+			`state`,					`user_withdraw_id`)
+		VALUES
+			(#{userId},					#{moneyFloat},					#{moneyFinal},
+			#{type},					#{decorationOrderId},			#{createTime},
+			#{state},					#{userWithdrawId});    	
+    </insert>
+    <update id="updateUserMoneyBill">
+    	UPDATE `user_money_bill`
+		SET
+			`user_id` 				= #{userId},
+			`money_float` 			= #{moneyFloat},
+			`money_final` 			= #{moneyFinal},
+			`type` 					= #{type},
+			`decoration_order_id` 	= #{decorationOrderId},
+			`create_time` 			= #{createTime},
+			`state` 				= #{state}
+			`user_withdraw_id`		= #{userWithdrawId}
+		WHERE `user_money_bill_id` = #{userMoneyBillId};    	
+    </update>
+    <insert id="insertUserIntegralBill">
+    	INSERT INTO `user_integral_bill`
+			(`user_id`,					`integral_float`,				`integral_final`,
+			`type`,						`decoration_order_id`,			`create_time`,
+			`state`)
+		VALUES
+			(#{userId},					#{integralFloat},				#{integralFinal},
+			#{type},					#{decorationOrderId},			#{createTime},
+			#{state});    	
+    </insert>
+    <update id="updateUserIntegralBill">
+    	UPDATE `user_integral_bill`
+		SET
+			`user_id` 				= #{userId},
+			`integral_float` 		= #{integralFloat},
+			`integral_final` 		= #{integralFinal},
+			`type` 					= #{type},
+			`decoration_order_id` 	= #{decorationOrderId},
+			`state` 				= #{state}
+		WHERE `user_integral_bill_id` = #{userIntegralBillId};	
+    </update>
+    <select id="selectUserMoneyBillById" resultMap="userMoneyBill">
+    	select *from user_money_bill where user_money_bill_id=#{userMoneyBillId}
+    </select>
+    <select id="selectUserIntegralBillById" resultMap="userIntegralBill">
+    	select *from user_integral_bill where user_integral_bill_id=#{userIntegralBillId}
+    </select>
+    <select id="selectUserMoneyBillCount" resultType="int">
+    	select count(1) from user_money_bill 
+    	where 1=1
+    		<if test="beginTime!=null and beginTime!=''">
+    			and DATE_FORMAT(create_time,'%Y-%m-%d')&lt;=#{beginTime!=}
+    		</if>
+    		<if test="endTime!=null and endTime!=''">
+    			and DATE_FORMAT(create_time,'%Y-%m-%d')&lt;=#{endTime}
+    		</if>
+    </select>
+    <select id="selectUserIntegralBillCount" resultType="int">
+    	select count(1) from user_integral_bill 
+    	where 1=1
+    		<if test="beginTime!=null and beginTime!=''">
+    			and DATE_FORMAT(create_time,'%Y-%m-%d')&lt;=#{beginTime!=}
+    		</if>
+    		<if test="endTime!=null and endTime!=''">
+    			and DATE_FORMAT(create_time,'%Y-%m-%d')&lt;=#{endTime}
+    		</if>
+    </select>
+    <select id="selectUserMoneyBills" resultMap="userMoneyBill" resultType="list">
+    	select * from user_integral_bill 
+    	where 1=1
+    		<if test="beginTime!=null and beginTime!=''">
+    			and DATE_FORMAT(create_time,'%Y-%m-%d')&lt;=#{beginTime!=}
+    		</if>
+    		<if test="endTime!=null and endTime!=''">
+    			and DATE_FORMAT(create_time,'%Y-%m-%d')&lt;=#{endTime}
+    		</if>
+    	<if test="pageStart!=null and maxResult!=null">
+    		 limit #{pageStart} , #{maxResult}
+    	</if>
+    </select>
+    <select id="selectUserIntegralBills" resultMap="userIntegralBill" resultType="list">
+    	select * from user_integral_bill 
+    	where 1=1
+    		<if test="beginTime!=null and beginTime!=''">
+    			and DATE_FORMAT(create_time,'%Y-%m-%d')&lt;=#{beginTime!=}
+    		</if>
+    		<if test="endTime!=null and endTime!=''">
+    			and DATE_FORMAT(create_time,'%Y-%m-%d')&lt;=#{endTime}
+    		</if>
+    	<if test="pageStart!=null and maxResult!=null">
+    		 limit #{pageStart} , #{maxResult}
+    	</if>
+    </select>
+</mapper>

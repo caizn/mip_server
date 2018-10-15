@@ -1,0 +1,40 @@
+t1t.wechat:
+  token: t1t_lingtoo_dev
+  appId: wx4afdbb15eda100db
+  appSecret: b4417a218ff3b9c00fab95665545ee29
+  appId.longyan: wxbcb6c1c45bec3032
+  appSecret.longyan: b82259191c57a3365f597a9af373158a
+  oauth2.url: https://open.weixin.qq.com/connect/oauth2/authorize
+  redirect.url: http://localhost/
+  template.noticeUserNewOrder: CaCEd2R28Nm6mFfOLtgydz_WL16Y-tS3Ii0IgbYvX2Y
+  template.noticeAdminNewOrder: CaCEd2R28Nm6mFfOLtgydz_WL16Y-tS3Ii0IgbYvX2Y
+  template.noticeWorkerNewOrder: nMQDyRMP4e9ojBZe4BhFvTVjY9sot97Zoj3IEiF2yD8
+  template.noticeWorkerGetOrder: -Yv_pvHqhp46W8K6d7msUgMJlCjfDg43LN7yVDqedlg
+  template.noticeAdminTheWorkerGetOrder: nMQDyRMP4e9ojBZe4BhFvTVjY9sot97Zoj3IEiF2yD8
+  template.noticeWorkerExitOrder: 5cscqmqZy0zDSm8HjtueAJURWJMz-GVPkBlLsd4IdnM
+  template.noticeWorkerAddPrice: CsPwJgBoLOKOzQrd7OgX2YPMwGrocPJfItk5nBQeil0
+  template.noticeOrderFinish: yhPqCQr6wCdBdtBVRGJGXWrlqOUhJ1JxZEPpemN_1uc
+  template.userApplyChangeWorker: dnqWRwc85Dqyvz5rW7IyI56cz6J16zJMAUJoeDzSsxg
+  template.workerApplyPass: -IVSRE67sbUKwbnnQ92lOjB4GrpX9hVvbhBLGImwKJE
+
+system:
+  contextPath.path:  http://www.17t1t.com/
+  image:
+    server: http://localhost/platform-decoration-images/
+    logo:
+      absolutePath: D:/alidata/imageserver/decoration
+      relativePath: /logo
+
+baidu.api.key: GZqwXKmi7BEjbx0dRHwN8lCf
+
+alibaba.dayu:
+  url: http://gw.api.taobao.com/router/rest
+  appKey: 23296269
+  secret: 0696d05ed84b38dc3fe9fa7db0dd4999
+  smsTemplateCode: SMS_109550193
+
+ttxy.emailpost:
+  smtp:smtp.exmail.qq.com
+  email:titi@cujubang.com
+  password:Ringtoo2016
+  port:465

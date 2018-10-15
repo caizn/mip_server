@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lingtoo.wechat.dao.UserWithdrawDAO" >
+    <resultMap id="uWithdraw" type="com.lingtoo.wechat.pojo.UserWithdraw" >
+        <id column="user_withdraw_id" property="userWithdrawId"/>
+        <result column="user_id" property="userId" />
+        <result column="withdraw_no" property="withdrawNo" />
+        <result column="money_withdraw" property="moneyWithdraw" />
+        <result column="money_final" property="moneyFinal" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+        <result column="state" property="state" />
+        
+        <result column="bank_name" property="bankName"/>
+        <result column="bank_place" property="bankPlace"/>
+        <result column="bank_card_name" property="bankCardName"/>
+        <result column="bank_card_code" property="bankCardCode"/>
+    </resultMap>
+    <insert id="insert">
+    	insert into user_withdraw
+    		(`user_id`,				`withdraw_no`,			`money_withdraw`,
+    		`money_final`,			`status`,				`create_time`,
+    		`state`,
+			`bank_name`,			`bank_place`,			`bank_card_name`,
+			`bank_card_code`)
+    	values
+    		(#{userId},				#{withdrawNo},			#{moneyWithdraw},
+    		#{moneyFinal},			#{status},				#{createTime},
+    		#{state},
+			#{bankName},			#{bankPlace},			#{bankCardName},
+			#{bankCardCode})
+    </insert>
+    <update id="update">
+    	update user_withdraw
+    	set
+    		`user_id`			=#{userId},
+    		`withdraw_no`		=#{withdrawNo},
+    		`money_withdraw`	=#{moneyWithdraw},
+    		`money_final`		=#{moneyFinal},
+    		`status`			=#{status},
+    		`create_time`		=#{createTime},
+    		`state`				=#{state},
+			
+			`bank_name`					= #{bankName},				
+			`bank_place`				= #{bankPlace},
+			`bank_card_name`			= #{bankCardName},
+			`bank_card_code`			= #{bankCardCode}
+    	where
+    		user_withdraw_id=#{userWithdrawId}
+    </update>
+    <select id="selectLastUserWithdrawByUserId" resultMap="uWithdraw">
+    	select *
+    	from user_withdraw
+    	where user_id=#{userId}
+    	order by create_time desc
+    	limit 0,1
+    </select>
+    <select id="selectUserWithdrawById" resultMap="uWithdraw">
+    	select *
+    	from user_withdraw
+    	where user_withdraw_id=#{userWithdrawId}
+    </select>
+    <select id="selectUserWithdrawCount" resultType="int">
+    	select count(1)
+    	from user_withdraw
+    	where 1=1 and state=0
+    	<if test="name!=null and name!=''">
+    		and name like "%"#{name}"%"
+    	</if>
+    	<if test="uWithdrawNo!=null and uWithdrawNo!=''">
+    		and withdraw_no like "%"#{uWithdrawNo}"%"
+    	</if>
+    	<if test="userId!=null">
+    		and user_id=#{userId}
+    	</if>
+    	<if test="status!=null and status!=-2">
+    		and status=#{status}
+    	</if>
+    </select>
+    <select id="selectUserWithdrawPage" resultMap="uWithdraw" resultType="list">
+    	select *
+    	from user_withdraw
+    	where 1=1 and state=0
+    	<if test="name!=null and name!=''">
+    		and name like "%"#{name}"%"
+    	</if>
+    	<if test="uWithdrawNo!=null and uWithdrawNo!=''">
+    		and withdraw_no like "%"#{uWithdrawNo}"%"
+    	</if>
+    	<if test="userId!=null">
+    		and user_id=#{userId}
+    	</if>
+    	<if test="status!=null and status!=-2">
+    		and status=#{status}
+    	</if>
+    	<if test="pageStart!=null and maxResult!=null">
+    		 limit #{pageStart} , #{maxResult}
+    	</if>
+    </select>
+</mapper>

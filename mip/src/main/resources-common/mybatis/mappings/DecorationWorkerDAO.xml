@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lingtoo.wechat.dao.DecorationWorkerDAO" >
+    <resultMap id="dWorker" type="com.lingtoo.wechat.pojo.DecorationWorker" >
+        <id column="decoration_worker_id" property="decorationWorkerId"/>
+        <result column="user_id" property="userId"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+        <result column="telephone" property="telephone"/>
+        <result column="urgency_telephone" property="urgencyTelephone"/>
+        <result column="address" property="address"/>
+        <result column="province_value" property="provinceValue"/>
+        <result column="city_value" property="cityValue"/>
+        <result column="area_value" property="areaValue"/>
+        <result column="province_code" property="provinceCode"/>
+        <result column="city_code" property="cityCode"/>
+        <result column="area_code" property="areaCode"/>
+        <result column="order_receive_area_value" property="orderReceiveAreaValue"/>
+        <result column="order_receive_area_code" property="orderReceiveAreaCode"/>
+        <result column="id_number" property="idNumber"/>
+        <result column="id_card_pic_url" property="idCardPicUrl"/>
+        <result column="decoration_item_list" property="decorationItemList"/>
+        <result column="audit_status" property="auditStatus"/>
+        <result column="create_time" property="createTime"/>
+        <result column="state" property="state"/>
+    </resultMap>
+    <insert id="insert">
+    	INSERT INTO `decoration_worker`
+			(`user_id`,								`name`,
+			`gender`,								`telephone`,					`urgency_telephone`,
+			`address`,								`province_value`,				`city_value`,
+			`area_value`,							`province_code`,				`city_code`,
+			`area_code`,							`order_receive_area_value`,		`order_receive_area_code`,
+			`id_number`,							`id_card_pic_url`,				`decoration_item_list`,
+			`audit_status`,							`create_time`,					`state`)
+		VALUES
+			(#{userId},								#{name},
+			#{gender},								#{telephone},					#{urgencyTelephone},
+			#{address},								#{provinceValue},				#{cityValue},
+			#{areaValue},							#{provinceCode},				#{cityCode},
+			#{areaCode},							#{orderReceiveAreaValue},		#{orderReceiveAreaCode},
+			#{idNumber},							#{idCardPicUrl},				#{decorationItemList},
+			#{auditStatus},							#{createTime},					#{state});
+    	
+    </insert>
+    <update id="update">
+    UPDATE 
+    	`decoration_worker`
+	SET
+		`user_id` 					= #{userId},
+		`name` 						= #{name},
+		`gender` 					= #{gender},
+		`telephone` 				= #{telephone},
+		`urgency_telephone` 		= #{urgencyTelephone},
+		`address` 					= #{address},
+		`province_value` 			= #{provinceValue},
+		`city_value` 				= #{cityValue},
+		`area_value` 				= #{areaValue},
+		`province_code` 			= #{provinceCode},
+		`city_code` 				= #{cityCode},
+		`area_code` 				= #{areaCode},
+		`order_receive_area_value` 	= #{orderReceiveAreaValue},
+		`order_receive_area_code` 	= #{orderReceiveAreaCode},
+		`id_number` 				= #{idNumber},
+		`id_card_pic_url` 			= #{idCardPicUrl},
+		`decoration_item_list` 		= #{decorationItemList},
+		`audit_status` 				= #{auditStatus},
+		`state` = #{state}
+	WHERE `decoration_worker_id` = #{decorationWorkerId};
+    </update>
+    <select id="selectDWorkerByUserId" resultMap="dWorker">
+    	select *
+    	from decoration_worker
+    	where user_id=#{userId}
+    </select>
+    <select id="selectDWorkerById" resultMap="dWorker">
+    	select *
+    	from decoration_worker
+    	where decoration_worker_id=#{dWorkerId}
+    </select>
+    <select id="selectDWorkersCount" resultType="int">
+    	select count(1)
+    	from decoration_worker
+    	where 1=1
+    	<if test="name!=null and name!=''">
+    		and name like "%"#{name}"%"
+    	</if> 
+    	<if test="auditStatus!=null and auditStatus!=-2">
+    		and audit_status=#{auditStatus}
+    	</if> 
+    	<if test="phone!=null and phone!=''">
+    		and telephone like "%"#{phone}"%"
+    	</if> 
+    </select>
+    <select id="selectDWorkers" resultMap="dWorker" resultType="list">
+    	select *
+    	from decoration_worker
+    	where 1=1
+    	<if test="name!=null and name!=''">
+    		and name like "%"#{name}"%"
+    	</if> 
+    	<if test="name!=null and name!=''">
+    		and name like "%"#{name}"%"
+    	</if> 
+    	<if test="phone!=null and phone!=''">
+    		and telephone like "%"#{phone}"%"
+    	</if> 
+    	<if test="auditStatus!=null and auditStatus!=-2">
+    		and audit_status=#{auditStatus}
+    	</if> 
+    	<if test="pageStart!=null and maxResult!=null">
+    		 limit #{pageStart} , #{maxResult}
+    	</if>
+    </select>
+    <select id="selectDWorkersByArea" resultMap="dWorker" resultType="list">
+    	select *
+    	from decoration_worker
+    	where 1=1
+    	<if test="province!=null and province!=''">
+    		and province_value=#{province}
+    	</if>
+    	<if test="city!=null and city!=''">
+    		and city_value=#{city}
+    	</if>
+    	<if test="area!=null and area!=''">
+    		and order_receive_area_value=#{area}
+    	</if>
+    	<if test="itemId!=null and itemId!=''">
+    		and 
+    			(decoration_item_list like "%,"#{itemId}",%"
+    			or decoration_item_list like "%["#{itemId}",%"
+    			or decoration_item_list like "%,"#{itemId}"]%"
+    			or decoration_item_list like "%["#{itemId}"]%")
+    	</if>
+    </select>
+</mapper>

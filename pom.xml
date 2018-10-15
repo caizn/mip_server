@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.yeshi</groupId>
+        <artifactId>platform-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>/parent/</relativePath>
+    </parent>
+    <artifactId>platform</artifactId>
+    <name>Lingtoo :: Platform</name>
+    <description>titi school of Lingtoo</description>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>parent</module>
+        <module>common</module>
+        <module>mip</module>
+    </modules>
+</project>

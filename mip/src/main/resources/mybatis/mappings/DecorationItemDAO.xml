@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lingtoo.wechat.dao.DecorationItemDAO" >
+    <resultMap id="dItem" type="com.lingtoo.wechat.pojo.DecorationItem" >
+        <id column="decoration_item_id" property="decorationItemId" jdbcType="INTEGER" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="state" property="state" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="sub_type" property="subType" jdbcType="INTEGER" />
+        <result column="sub_title" property="subTitle" jdbcType="VARCHAR" />
+    </resultMap>
+    <insert id="insert">
+    	INSERT INTO `decoration_item`
+			(`title`,
+			`type`,
+			`sub_title`,
+			`sub_type`,
+			`state`,
+			`create_time`)
+		VALUES
+			(#{title},
+			#{type},
+			#{subTitle},
+			#{subType},
+			#{state},
+			#{createTime});    	
+    </insert>
+    <update id="update">
+    	UPDATE `decoration_item`
+		SET
+			`title` = #{title},
+			`type` = #{type},
+			`sub_title` = #{subTitle},
+			`sub_type` = #{subType},
+			`state` = #{state}
+		WHERE `decoration_item_id` = #{decorationItemId};
+    </update>
+    <select id="selectDecorationItemById" resultMap="dItem">
+    	select *
+    	from decoration_item
+    	where decoration_item_id=#{decorationItemId}
+    </select>
+    <select id="selectDecorationItemsCount" resultType="int">
+    	select count(1)
+    	from decoration_item
+    	where 1=1 and state=0
+    	<if test="type!=null">
+    		and type=#{type}
+    	</if>
+    </select>
+    <select id="selectDecorationItems" resultMap="dItem" resultType="list">
+    	select *
+    	from decoration_item
+    	where 1=1 and state=0
+    	<if test="type!=null">
+    		and type=#{type}
+    	</if>
+        order by type, sub_type, decoration_item_id
+    	<if test="pageStart!=null and maxResult!=null">
+    		 limit #{pageStart} , #{maxResult}
+    	</if>
+    </select>
+</mapper>

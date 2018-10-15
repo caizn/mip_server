@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0">
+
+    <description>JSTL 1.1 functions library</description>
+    <display-name>JSTL functions sys</display-name>
+    <tlib-version>1.1</tlib-version>
+    <short-name>fns</short-name>
+    <uri>http://java.sun.com/jsp/jstl/fns</uri>
+
+    <!-- CalendarUtil -->
+    <function>
+        <description>获取未来某个时间是今天/明天/周几/具体年月日</description>
+        <name>parseFutureDay</name>
+        <function-class>com.lingtoo.wechat.utils.CalendarUtil</function-class>
+        <function-signature>java.lang.String parseFutureDay(java.util.Date)</function-signature>
+        <example>${fns:parseFutureDay(date)}</example>
+    </function>
+
+    <function>
+        <description>默认的比赛日期时间</description>
+        <name>defaultGameTime</name>
+        <function-class>com.lingtoo.wechat.utils.CalendarUtil</function-class>
+        <function-signature>java.util.Date defaultGameTime()</function-signature>
+        <example>${fns:defaultGameTime()}</example>
+    </function>
+
+    <function>
+        <description>格式化当前的日期时间</description>
+        <name>formatDatetime</name>
+        <function-class>com.lingtoo.wechat.utils.CalendarUtil</function-class>
+        <function-signature>java.lang.String formatDatetime(java.util.Date)</function-signature>
+        <example>${fns:formatDatetime(date)}</example>
+    </function>
+
+    <function>
+        <description>格式化当前的日期</description>
+        <name>formatDate</name>
+        <function-class>com.lingtoo.wechat.utils.CalendarUtil</function-class>
+        <function-signature>java.lang.String formatDate(java.util.Date)</function-signature>
+        <example>${fns:formatDate(date)}</example>
+    </function>
+
+    <function>
+        <description>decode base64 string</description>
+        <name>decodeBase64String</name>
+        <function-class>com.lingtoo.common.utils.Encodes</function-class>
+        <function-signature>java.lang.String decodeBase64String(java.lang.String)</function-signature>
+        <example>${fns:decodeBase64String(encodeString)}</example>
+    </function>
+
+    <function>
+        <description>image server url string</description>
+        <name>getImageServer</name>
+        <function-class>com.lingtoo.wechat.utils.SystemConfig</function-class>
+        <function-signature>java.lang.String getImageServer()</function-signature>
+        <example>${fns:getImageServer()}</example>
+    </function>
+</taglib>

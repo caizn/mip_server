@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lingtoo.wechat.dao.UserDAO">
+    <resultMap id="user" type="com.lingtoo.wechat.pojo.User">
+    	<id column="user_id" property="userId"/>
+       	<result column="wechat_user_id" property="wechatUserId" />
+       	<result column="money" property="money" />
+       	<result column="integral" property="integral" />
+       	<result column="generalize_qrcode_url" property="generalizeQrcodeUrl" />
+       	<result column="manager_sign" property="managerSign" />
+        <result column="introducer_id" property="introducerId" />
+        <result column="introduce_count" property="introduceCount" />
+        <result column="create_time" property="createTime" />
+        <result column="state" property="state" />
+        
+        <result column="name" property="name"/>
+        <result column="telephone" property="telephone"/>
+        <result column="urgency_telephone" property="urgencyTelephone"/>
+        <result column="address" property="address"/>
+        <result column="province_value" property="provinceValue"/>
+        <result column="city_value" property="cityValue"/>
+        <result column="area_value" property="areaValue"/>
+        <result column="province_code" property="provinceCode"/>
+        <result column="city_code" property="cityCode"/>
+        <result column="area_code" property="areaCode"/>
+        <result column="remark" property="remark"/>
+        <result column="salesman" property="salesman"/>
+        <result column="audit_status" property="auditStatus"/>
+        
+        <result column="bank_name" property="bankName"/>
+        <result column="bank_place" property="bankPlace"/>
+        <result column="bank_card_name" property="bankCardName"/>
+        <result column="bank_card_code" property="bankCardCode"/>
+        
+        <result column="nickname" property="nickname"/>
+        <result column="headimgurl" property="headimgurl"/>
+    </resultMap>
+    <resultMap id="userAddress" type="com.lingtoo.wechat.pojo.UserAddress">
+    	<id column="user_address_id" property="userAddressId"/>
+        <result column="user_id" property="userId" />
+        <result column="name" property="name" />
+        <result column="phone" property="phone" />
+        <result column="address" property="address" />
+        <result column="province_value" property="provinceValue" />
+        <result column="city_value" property="cityValue" />
+        <result column="area_value" property="areaValue" />
+        <result column="province_code" property="provinceCode" />
+        <result column="city_code" property="cityCode" />
+        <result column="area_code" property="areaCode" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+        <result column="state" property="state" />
+    </resultMap>
+    <resultMap id="wechatUser" type="com.lingtoo.wechat.pojo.WechatUser">
+    	<id column="wechat_user_id" property="wechatUserId"/>
+        <result column="user_id" property="userId" />
+        <result column="merchant_id" property="merchantId" />
+        <result column="openid" property="openid" />
+        <result column="unionid" property="unionid" />
+        <result column="nickname" property="nickname" />
+        <result column="reamark_name" property="reamarkName" />
+        <result column="gender" property="gender" />
+        <result column="city" property="city" />
+        <result column="province" property="province" />
+        <result column="country" property="country" />
+        <result column="headimgurl" property="headimgurl" />
+        <result column="subscribe" property="subscribe" />
+        <result column="locked" property="locked" />
+        <result column="location_city" property="locationCity" />
+        <result column="create_time" property="createTime" />
+        <result column="client_type" property="clientType" />
+        <result column="client_id" property="clientId" />
+        <result column="appid" property="appid" />
+    </resultMap>
+    <insert id="insertUser" parameterType="com.lingtoo.wechat.pojo.User">
+    	INSERT INTO `user`
+			(`wechat_user_id`,				`money`,						`integral`,				
+			`generalize_qrcode_url`,		`manager_sign`,					`introducer_id`,		
+			`create_time`,					`state`,						`introduce_count`,
+			
+			`name`,							`telephone`,					`urgency_telephone`,
+			`address`,						`province_value`,				`city_value`,
+			`area_value`,					`province_code`,				`city_code`,
+			`area_code`,					`remark`,						`audit_status`,
+			`salesman`,
+			
+			`bank_name`,					`bank_place`,					`bank_card_name`,
+			`bank_card_code`)
+		VALUES
+			(#{wechatUserId},				#{money},						#{integral},
+			#{generalizeQrcodeUrl},			#{managerSign},					#{introducerId},
+			#{createTime},					#{state},						#{introduceCount},
+			
+			#{name},						#{telephone},					#{urgencyTelephone},
+			#{address},						#{provinceValue},				#{cityValue},
+			#{areaValue},					#{provinceCode},				#{cityCode},
+			#{areaCode},					#{remark},						#{auditStatus},
+			#{salesman},
+			
+			#{bankName},					#{bankPlace},					#{bankCardName},
+			#{bankCardCode});   	
+    </insert>
+    <insert id="insertUserAddress" parameterType="com.lingtoo.wechat.pojo.UserAddress">
+    	INSERT INTO `user_address`
+			(`user_id`,				`name`,					`phone`,
+			`address`,				`province_value`,		`city_value`,
+			`area_value`,			`province_code`,		`city_code`,
+			`area_code`,			`status`,
+			`create_time`,			`state`)
+		VALUES
+			(#{userId},				#{name},				#{phone},
+			#{address},				#{provinceValue},		#{cityValue},
+			#{areaValue},			#{provinceCode},		#{cityCode},
+			#{areaCode},			#{status},
+			#{createTime},			#{state});
+    </insert>
+    <insert id="insertWechatUser" parameterType="com.lingtoo.wechat.pojo.WechatUser">
+    	INSERT INTO `wechat_user`
+			(`merchant_id`,			`openid`,
+			`unionid`,				`nickname`,				`remark_name`,
+			`city`,					`province`,				`country`,
+			`gender`,				`headimgurl`,			`subscribe`,
+			`locked`,				`location_city`,		`create_time`,
+			`client_type`,			`client_id`,			`appid`)
+		VALUES
+			(#{merchantId},			#{openid},
+			#{unionid},				#{nickname},			#{remarkName},
+			#{city},				#{province},			#{country},
+			#{gender},				#{headimgurl},			#{subscribe},
+			#{locked},				#{locationCity},		#{createTime},
+			#{clientType},			#{clientId},			#{appid});    	
+    </insert>
+    <update id="updateUser" parameterType="com.lingtoo.wechat.pojo.User">
+    	UPDATE `user`
+		SET
+			`wechat_user_id` 		= #{wechatUserId},
+			`money` 				= #{money},
+			`integral` 				= #{integral},
+			`manager_sign`			= #{managerSign},
+			`generalize_qrcode_url` = #{generalizeQrcodeUrl},
+			`create_time` 			= #{createTime},
+			`state` 				= #{state},
+			`introducer_id` 		= #{introducerId},
+			`introduce_count` 		= #{introduceCount},
+			
+			`name` 						= #{name},
+			`telephone` 				= #{telephone},
+			`urgency_telephone` 		= #{urgencyTelephone},
+			`address` 					= #{address},
+			`province_value` 			= #{provinceValue},
+			`city_value` 				= #{cityValue},
+			`area_value` 				= #{areaValue},
+			`province_code` 			= #{provinceCode},
+			`city_code` 				= #{cityCode},
+			`area_code` 				= #{areaCode},
+			`remark`					= #{remark},
+			`audit_status`				= #{auditStatus},
+			`salesman`					= #{salesman},
+			
+			`bank_name`					= #{bankName},				
+			`bank_place`				= #{bankPlace},
+			`bank_card_name`			= #{bankCardName},
+			`bank_card_code`			= #{bankCardCode}
+		WHERE 
+			`user_id` = #{userId};
+    </update>
+    <update id="updateUserAddress" parameterType="com.lingtoo.wechat.pojo.UserAddress">
+    	UPDATE `user_address`
+		SET
+			`user_id` 			= #{userId},
+			`name` 				= #{name},
+			`phone` 			= #{phone},
+			`address` 			= #{address},
+			`province_value` 	= #{provinceValue},
+			`city_value` 		= #{cityValue},
+			`area_value` 		= #{areaValue},
+			`province_code` 	= #{provinceCode},
+			`city_code`			= #{cityCode},
+			`area_code` 		= #{areaCode},
+			`status` 			= #{status},
+			`create_time` 		= #{createTime},
+			`state` 			= #{state}
+		WHERE `user_address_id` = #{userAddressId};
+    </update>
+    <update id="updateWechatUser" parameterType="com.lingtoo.wechat.pojo.WechatUser">
+    	UPDATE `wechat_user`
+		SET
+			`merchant_id`		= #{merchantId},
+			`openid` 			= #{openid},
+			`unionid` 			= #{unionid},
+			`nickname` 			= #{nickname},
+			`remark_name` 		= #{remarkName},
+			`city` 				= #{city},
+			`province` 			= #{province},
+			`country` 			= #{country},
+			`gender` 			= #{gender},
+			`headimgurl` 		= #{headimgurl},
+			`subscribe` 		= #{subscribe},
+			`locked` 			= #{locked},
+			`location_city` 	= #{locationCity},
+			`create_time` 		= #{createTime},
+			`client_type` 		= #{clientType},
+			`client_id` 		= #{clientId},
+			`appid` 			= #{appid}
+		WHERE `wechat_user_id` = #{wechatUserId};
+    </update>
+    <select id="selectUserVisitCount" resultType="int">
+    	SELECT
+			user_id
+		FROM
+			`web_statistics`
+		WHERE
+			merchant_id = #{merchantId}
+		AND DATE_FORMAT(create_time, '%Y-%m-%d') = #{dayString}
+		GROUP BY user_id
+    </select>
+    <sql id="select_user_column">
+    	<if test="introducerId!=null">
+    		and u.introducer_id=#{introducerId}
+    	</if>
+    	<if test="phone!=null and phone!=''">
+    		and u.telephone like "%"#{phone}"%"
+    	</if>
+    	<if test="name!=null and name!=''">
+    		and u.name like "%"#{name}"%"
+    	</if>
+    	<if test="nickname!=null and nickname!=''">
+    		and wu.nickname like "%"#{nickname}"%"
+    	</if>
+    	<if test="auditStatus!=null and auditStatus!=-2">
+    		and u.audit_status = #{auditStatus}
+    	</if>
+    	<if test="managerSign!=null and managerSign!=-1">
+    		and u.manager_sign = #{managerSign}
+    	</if>
+    	<if test="gengeralizeStatus!=null and gengeralizeStatus==1">
+    		and u.name is not null
+    	</if>
+    </sql>
+    <select id="selectUserCountByIntroduce" resultType="int">
+    	select count(1)
+    	from user
+    	where state=0 and introducer_id=#{introducerId}
+    </select>
+    <select id="selectUserByIntroduce" resultMap="user" resultType="list">
+    	select u.*,wu.nickname,wu.headimgurl
+    	from user u
+    	left join wechat_user wu on u.wechat_user_id=wu.wechat_user_id
+    	where state=0 and introducer_id=#{introducerId}
+      	<if test="pageStart!=null and maxResult!=null">
+      	 	limit #{pageStart} , #{maxResult}
+      	</if>
+    </select>
+    <select id="selectUserCount" resultType="int">
+    	select count(1)
+    	from user u 
+    	left join wechat_user wu on u.wechat_user_id=wu.wechat_user_id
+    	where state=0
+      	<include refid="select_user_column"/>
+    </select>
+    <select id="selectUserPage" resultMap="user">
+    	select u.*,wu.nickname,wu.headimgurl
+    	from user u 
+    	left join wechat_user wu on u.wechat_user_id=wu.wechat_user_id
+    	where state=0
+      	<include refid="select_user_column"/>
+      	<if test="pageStart!=null and maxResult!=null">
+      	 	limit #{pageStart} , #{maxResult}
+      	</if>
+    </select>
+    <select id="selectUserById" resultMap="user">
+    	select u.*,wu.nickname,wu.headimgurl from user u left join wechat_user wu on u.wechat_user_id=wu.wechat_user_id where user_id=#{userId}
+    </select>
+    <select id="selectUserByOpenId" resultMap="user">
+    	select u.* from user u left join wechat_user wu on u.wechat_user_id=wu.wechat_user_id where wu.openid=#{openId}
+    </select>
+    <select id="selectWechatUserByUserId" resultMap="wechatUser">
+    	select wu.* from wechat_user wu left join user u on wu.wechat_user_id=u.wechat_user_id where u.user_id=#{userId}
+    </select>
+    <select id="selectWechatUserByOpenId" resultMap="wechatUser">
+    	select wu.* from wechat_user wu  where wu.openid=#{openId}
+    </select>
+    <select id="selectUserAddressByUserId" resultMap="userAddress" resultType="list">
+    	select * from user_address  where user_id=#{userId} and state=0 order by status desc,create_time DESC
+    </select>
+    <select id="selectUserDefaultAddressById" resultMap="userAddress">
+        select * from user_address  where user_id=#{userId} and state=0 and status = 1;
+    </select>
+    <select id="selectUserAddressById" resultMap="userAddress">
+    	select * from user_address  where user_address_id=#{userAddressId}
+    </select>
+    <select id="selectLastUserAddressByUserId" resultMap="userAddress">
+    	select * 
+    	from user_address  
+    	where user_id=#{userId} and state=0 
+    	order by create_time DESC
+    	limit 0,1
+    </select>
+    <update id="updateUserSubscribe">
+        UPDATE wechat_user SET subscribe = 1 WHERE wechat_user_id = #{wechatUserId}
+    </update>
+   <select id="findUserByRand" resultMap="user">
+   		select *from user where rand=#{rand}
+   </select>
+   <select id="selectManagerUsers" resultMap="wechatUser" resultType="list">
+   		select wu.*
+   		from user u left join wechat_user wu on u.wechat_user_id=wu.wechat_user_id 
+   		where manager_sign=1 and state=0
+   </select>
+</mapper>
