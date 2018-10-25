@@ -1,22 +1,36 @@
 package com.lingtoo.wechat.pojo.mip;
 
 public class MIPAccount {
-	private String mipAccountId;
+	private Integer mipAccountId;
 	
 	private String accountName;
 	
 	private String baiduAccount;
+
+	private String baiduPwd;
 	
 	private String moduleType;
 	
 	private String moduleTypeName;
-
-	public String getMipAccountId() {
+	
+	private String spCode;
+	
+	private String webUrl;
+	
+	public Integer getMipAccountId() {
 		return mipAccountId;
 	}
 
-	public void setMipAccountId(String mipAccountId) {
+	public void setMipAccountId(Integer mipAccountId) {
 		this.mipAccountId = mipAccountId;
+	}
+
+	public String getBaiduPwd() {
+		return baiduPwd;
+	}
+
+	public void setBaiduPwd(String baiduPwd) {
+		this.baiduPwd = baiduPwd;
 	}
 
 	public String getAccountName() {
@@ -49,6 +63,22 @@ public class MIPAccount {
 
 	public void setModuleTypeName(String moduleTypeName) {
 		this.moduleTypeName = moduleTypeName;
+	}
+
+	public String getSpCode() {
+		return spCode;
+	}
+
+	public void setSpCode(String spCode) {
+		this.spCode = spCode;
+	}
+
+	public String getWebUrl() {
+		return webUrl;
+	}
+
+	public void setWebUrl(String webUrl) {
+		this.webUrl = webUrl;
 	}
 	
 }

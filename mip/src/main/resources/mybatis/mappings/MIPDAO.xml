@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lingtoo.wechat.dao.mip.MIPDAO" >
+    <resultMap id="MIPAccount" type="com.lingtoo.wechat.pojo.mip.MIPAccount" >
+        <id column="mip_account_id" property="mipAccountId" jdbcType="INTEGER" />
+        <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+        <result column="baidu_1ccount" property="baiduAccount" jdbcType="VARCHAR" />
+        <result column="baidu_pwd" property="baiduPwd" jdbcType="VARCHAR" />
+        <result column="module_type" property="moduleType" jdbcType="VARCHAR" />
+        <result column="module_type_name" property="moduleTypeName" jdbcType="VARCHAR" />
+        <result column="sp_code" property="spCode" jdbcType="VARCHAR" />
+        <result column="web_url" property="webUrl" jdbcType="VARCHAR" />
+    </resultMap>
+    <resultMap type="com.lingtoo.wechat.pojo.mip.MIPMessage" id="MIPMessage">
+        <id column="mip_message_id" property="mipMessageId" jdbcType="INTEGER" />
+        <result column="mip_account_id" property="mipAccountId" jdbcType="VARCHAR" />
+        <result column="mip_message_type_id" property="mipMessageTypeId" jdbcType="VARCHAR" />
+        <result column="jump_url" property="jumpUrl" jdbcType="VARCHAR" />
+        <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    </resultMap>
+    <resultMap type="com.lingtoo.wechat.pojo.mip.MIPMessageType" id="MIPMessageType">
+        <id column="mip_message_type_id" property="mipMessageTypeId" jdbcType="INTEGER" />
+        <result column="mip_messages_type_desc" property="mipMessagesTypeDesc" jdbcType="VARCHAR" />
+        <result column="max_count" property="maxCount" jdbcType="INTEGER" />
+    </resultMap>
+    <select id="selectMIPAccountList" resultMap="MIPAccount">
+        SELECT *
+        FROM mip_account
+    </select>
+    <select id="selectMIPAccountByAccountId" resultMap="MIPAccount">
+        SELECT *
+        FROM mip_account
+        where mip_account_id=#{accountId}
+    </select>
+    <select id="selectMIPAccountBySpCode" resultMap="MIPAccount">
+        SELECT *
+        FROM mip_account
+        where sp_code=#{spCode}
+    </select>
+    <select id="selectMIPMessageTypeList" resultMap="MIPAMessageType">
+        SELECT *
+        FROM mip_message_type
+    </select>
+    <select id="selectMIPMessageListByAccountId" resultMap="MIPAMessage">
+        SELECT *
+        FROM mip_message
+        where mip_account_id=#{accountId}
+    </select>
+    <select id="selectMIPMessageByMsgId" resultMap="MIPAMessage">
+        SELECT *
+        FROM mip_message
+        where mip_message_id=#{msgId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from mip_message
+        where mip_message_id = #{mipMessageId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.lingtoo.wechat.pojo.Log" >
+        insert into mip_message (
+        	mip_account_id,
+        	mip_message_type_id, 
+        	jump_url,
+        	img_url
+        )
+        values (#{mipAccountId},#{mipMessageTypeId}, #{jumpUrl},
+        #{imgUrl}
+        )
+    </insert>
+   <update id="updateMIPMessage" parameterType="com.lingtoo.wechat.pojo.mip.MIPMessage">
+        UPDATE mip_message  
+        <set >
+        <if test="jumpUrl != null" >
+            jump_url=#{jumpUrl},
+         </if>
+        <if test="imgUrl != null" >
+            img_url=#{imgUrl},
+         </if>
+         </set> 
+		   where mip_message_id=#{mipMessageId}
+   </update>
+</mapper>
